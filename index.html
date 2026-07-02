@@ -6,25 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="天草市では、若者が魅力的に感じ、かつ、外貨を稼ぐ天草の新産業として「ゲーム・アニメ・映像（CG）等のデジタルコンテンツ制作産業」を創出しています。">
     <link rel="stylesheet" href="css/style.css">
+
     </head>
     <!-- main -->
     <body>
         <header>
             <div class="header_logo">
                 <a href="top">
-                    <img src="img/da_logo.png" alt="天草デジタルアートの島創造事業" height="65" width="auto">
+                    <img src="img/da_logo.png" alt="天草デジタルアートの島創造事業" width="auto" height="65">
                 </a>
             </div>  
-            <div class="header_nav">
+            <nav class="header_menu">
+                <div>
+                    <div class="openbtn">
+                        <div class="openbtn-area">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
 
-            </div> 
+                    <div class="nav" id="js_nav">
+                        <ul id="g-navi">
+                            <li class="g-navi_i"><a href="#about"><img src="images/menu_icon1.png" alt="アイコン">ABOUT</a></li>
+                            <li class="g-navi_i"><a href="#news"><img src="images/menu_icon2.png" alt="アイコン">MOVIE</a></li>
+                            <li class="g-navi_i"><a href="#map"><img src="images/menu_icon3.png" alt="アイコン">DATA</a></li>
+                            <li class="g-navi_i"><a href="#access"><img src="images/menu_icon4.png" alt="アイコン">アクセス</a></li>
+                            <li>
+                                <a href="http://www.utsukushigaharakogen.jp/" target="_blank">
+                                    <div class="original_icon"><img src="images/original_icon.png" alt="元サイトアイコン"></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div> 
+            </nav>
         </header>
 
         <main id="main">
             <h1 class="maincopy">
-                <im
+                <img src="img/tagline.png" alt="天草覗いて、見つかるカタチ" width="444" height="155">
             </h1>
-            <p>ここに本文が入ります</p>
+        
         </main>
         <!-- footer -->
         <footer role="contentinfo">
@@ -32,5 +55,7 @@
 
             </div>      
         </footer>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="js/main.js"></script>
     </body>
 </html>
