@@ -7,6 +7,11 @@ html {
      scroll-behavior: smooth;
 }
 
+img {
+    max-width:100%;
+}
+
+/* body */
 body {
     min-width:320px;
     color: #0735FD;
@@ -31,6 +36,77 @@ body::before{
     background-color: #464646;
 }
 
-img {
-    max-width:100%;
+/* main */
+
+
+/*ボタン外側※レイアウトによってpositionや形状は適宜変更してください*/
+.openbtn{
+	/*ボタン内側の基点となるためrelativeを指定。
+追従するナビゲーションの場合はfixed＋top、rightといった位置をセットで指定*/
+	position: absolute;
+    right:60px;
+    top: 60px;
+	background-color:rgba(17, 17, 17, 0.75);
+    border: 4px solid #fff;
+	cursor: pointer;
+    z-index: 1100;
+    width: 80px;
+    height:80px;
+	border-radius: 50px;
+    cursor: pointer;
 }
+
+/*ボタン内側*/
+.openbtn .openbtn-area{
+    transition: all .6s;/*アニメーションの設定*/
+	width:71px;
+	height:71px;
+}
+
+.openbtn span{
+    display: inline-block;
+    transition: all .4s;
+    position: absolute;
+    left: 17px;
+    height: 4px;
+    border-radius: 4px;
+	background: #fff;
+  	width: 53%;
+  }
+
+.openbtn span:nth-of-type(1) {
+	top:22px;	
+}
+
+.openbtn span:nth-of-type(2) {
+	top:34px;
+}
+
+.openbtn span:nth-of-type(3) {
+	top:46px;
+}
+
+/*activeクラスが付与されると .openbtn-areaが360度回転し、その中の線が回転して×に*/
+.openbtn.active .openbtn-area{
+	transform: rotate(360deg);
+}
+
+.openbtn.active span:nth-of-type(1) {
+    top: 28px;
+    left: 17px;
+    transform: translateY(6px) rotate(-45deg);
+    width: 53%;
+}
+
+.openbtn.active span:nth-of-type(2) {
+	opacity: 0;
+}
+
+.openbtn.active span:nth-of-type(3){
+    top: 40px;
+    left: 17px;
+    transform: translateY(-6px) rotate(45deg);
+    width: 53%;
+}
+
+
