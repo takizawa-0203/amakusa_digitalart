@@ -4,9 +4,7 @@
 
 html {
     font-size: clamp(12px, 1.5vw, 16px);
-    scroll-behavior: smooth;
     font-family: "Noto Sans JP", sans-serif ,"Alegreya Sans", sans-serif;
-    scroll-snap-type: y mandatory;
 }
 
 .font_en{
@@ -24,12 +22,6 @@ html {
 
 img {
     max-width:100%;
-}
-
-.topview,
-section.fixed{
-    scroll-snap-align: start;
-    scroll-snap-stop: always; 
 }
 
 /*-------- ローディング -------*/
@@ -374,6 +366,12 @@ body::before{
     position: relative;
     width: 100%;
 }
+
+.fixed {
+    height: 100vh;
+    position: relative; /* stickyから戻す */
+}
+
 /* タイトル */
 .about_title{
     position: -webkit-sticky;
@@ -386,7 +384,7 @@ body::before{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    font-size: clamp(18px, 2.2vw, 24px);
+    font-size: clamp(18px, 2vw, 24px);
 }
 
 .about_title_en,.about_title_jp-word{
@@ -450,6 +448,12 @@ section.fixed {
 .fixed05 {
     background-image: url(../img/about_bg05.png);
 }
+
+.fixed01 { z-index: 1; }
+.fixed02 { z-index: 2; }
+.fixed03 { z-index: 3; }
+.fixed04 { z-index: 4; }
+.fixed05 { z-index: 5; }
 
 /* about内容 */
 
@@ -563,7 +567,9 @@ section.fixed {
 }
 
 /* ------ movie ------- */
-.movie{
+.movie {
+    position: relative; 
+    z-index: 6;
     padding: 400px 0;
     background-color: #E8E8E8;
 }
@@ -587,7 +593,8 @@ section.fixed {
 
 .movie_area {
 width: 100%;
-min-width:;
+height: auto;
+max-width:1000px;
 aspect-ratio: 16/9;
 
 }
