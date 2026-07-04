@@ -7,7 +7,10 @@ $(window).on('load', function () {
         }, 1000);
     }, 3000);
 
-    initScrollPositions(); // ロード完了後に位置を計算
+    initScrollPositions();
+
+    // リサイズ時に再計算
+    window.addEventListener('resize', initScrollPositions);
 });
 
 // ハンバーガーメニュー
@@ -96,13 +99,13 @@ function initScrollPositions() {
         : wrapperTop + 5 * vh;
 
     scrollPositions = [
-        0,                      // 0: .topview
-        wrapperTop,             // 1: .fixed01
-        wrapperTop + vh,        // 2: .fixed02
-        wrapperTop + vh * 2,    // 3: .fixed03
-        wrapperTop + vh * 3,    // 4: .fixed04
-        wrapperTop + vh * 4,    // 5: .fixed05
-        movieTop                // 6: .movie
+        0,                   // 0: .topview
+        wrapperTop,          // 1: .fixed01
+        wrapperTop + vh,     // 2: .fixed02
+        wrapperTop + vh * 2, // 3: .fixed03
+        wrapperTop + vh * 3, // 4: .fixed04
+        wrapperTop + vh * 4, // 5: .fixed05
+        movieTop             // 6: .movie
     ];
 }
 
@@ -116,9 +119,19 @@ function goToSection(idx) {
 
 // ── ホイール操作 ────────────────────────────────────────────
 window.addEventListener('wheel', function (e) {
-    e.preventDefault();
     if (isScrolling) return;
-    goToSection(currentIdx + (e.deltaY > 0 ? 1 : -1));
+
+    const direction = e.deltaY > 0 ? 1 : -1;
+    const nextIdx = currentIdx + direction;
+
+    // ✅ 修正: 範囲外は preventDefault を呼ばず通常スクロールを許可
+    // 例）.movie（index 6）でさらに下にスクロールしようとした場合
+    if (nextIdx < 0 || nextIdx >= scrollPositions.length) {
+        return;
+    }
+
+    e.preventDefault(); // 範囲内のときだけブロック
+    goToSection(nextIdx);
 }, { passive: false });
 
 // ── タッチ操作（スマホ対応） ────────────────────────────────
@@ -131,21 +144,12 @@ window.addEventListener('touchend', function (e) {
     if (isScrolling) return;
     const diff = touchStartY - e.changedTouches[0].clientY;
     if (Math.abs(diff) > 40) {
-        goToSection(currentIdx + (diff > 0 ? 1 : -1));
+        const direction = diff > 0 ? 1 : -1;
+        const nextIdx = currentIdx + direction;
+
+        // ✅ 修正: 範囲内のときだけセクション移動、範囲外は通常スクロール
+        if (nextIdx >= 0 && nextIdx < scrollPositions.length) {
+            goToSection(nextIdx);
+        }
     }
 }, { passive: true });
-
-
-// ロード完了後に位置を計算
-$(window).on('load', function () {
-    setTimeout(function () {
-        $('body').addClass('appear');
-        setTimeout(function () {
-            $("#splash").hide();
-        }, 1000);
-    }, 3000);
-
-    initScrollPositions();
-
-    window.addEventListener('resize', initScrollPositions);
-});
