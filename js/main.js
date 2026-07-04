@@ -134,3 +134,18 @@ window.addEventListener('touchend', function (e) {
         goToSection(currentIdx + (diff > 0 ? 1 : -1));
     }
 }, { passive: true });
+
+
+// ロード完了後に位置を計算
+$(window).on('load', function () {
+    setTimeout(function () {
+        $('body').addClass('appear');
+        setTimeout(function () {
+            $("#splash").hide();
+        }, 1000);
+    }, 3000);
+
+    initScrollPositions();
+
+    window.addEventListener('resize', initScrollPositions);
+});
