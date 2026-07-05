@@ -687,7 +687,7 @@ section.fixed {
         background-image: url(../img/KV_people_sp.png);
         background-size: cover;
         background-position: center center;
-        background-attachment: scroll;
+        background-attachment: fixed;
     }
 
     .maincopy {
