@@ -100,7 +100,7 @@ body {
     min-width:320px;
     color: #0735FD;
     background-color: #fff;
-	margin:0;
+    margin: 0;
 }
 
 body::before{
