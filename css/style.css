@@ -129,7 +129,7 @@ body::before{
     height: 100vh;
 }
 
-.keyv_pc{
+.keyv{
     content: '';
     display: block;
     position:relative;
@@ -432,7 +432,7 @@ section.fixed {
 .fixed01, .fixed02, .fixed03, .fixed04, .fixed05 {
     width: 100%;
     height: 100vh; 
-    background-size: auto 180vh;
+    background-size: auto 150vh;
     background-position: center center;
     background-repeat: no-repeat;
 }
@@ -638,3 +638,349 @@ section.fixed {
 }
 
 
+
+
+
+/* ==============================
+   SP版レスポンシブ
+   767px以下
+============================== */
+@media screen and (max-width:479px) {
+
+    html {
+        font-size: 14px;
+    }
+
+    body {
+        min-width: 320px;
+        overflow-x: hidden;
+    }
+
+    body::before {
+        background-image: url(../img/KV_effect_sp.png), url(../img/sp_bg.jpg);
+        background-size: cover;
+        background-position: center center;
+        background-attachment: scroll;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* ---------- ローディング ---------- */
+    .loading-circle {
+        width: 220px;
+        height: 220px;
+    }
+
+    /* ---------- KV ---------- */
+    .topview {
+        height: 100svh;
+        min-height: 600px;
+    }
+
+    .keyv{
+        height: 100svh;
+        min-height: 600px;
+        background-image: url(../img/KV_people_sp.png);
+        background-size: cover;
+        background-position: center center;
+        background-attachment: scroll;
+    }
+
+    .maincopy {
+        padding-left: 24px;
+        padding-bottom: 40px;
+        width: 75%;
+        max-width: 320px;
+    }
+
+    .maincopy img {
+        width: 100%;
+        height: auto;
+    }
+
+    /* ---------- ヘッダー ---------- */
+    .header_logo {
+        position: absolute;
+        padding-left: 24px;
+        padding-top: 24px;
+        z-index: 1000;
+    }
+
+    .header_logo img {
+        width: auto;
+        height: 48px;
+    }
+
+    .openbtn {
+        right: 24px;
+        top: 24px;
+        width: 60px;
+        height: 60px;
+        border: 3px solid #fff;
+        border-radius: 50%;
+    }
+
+    .openbtn .openbtn-area {
+        width: 54px;
+        height: 54px;
+    }
+
+    .openbtn span {
+        left: 13px;
+        width: 55%;
+        height: 3px;
+    }
+
+    .openbtn span:nth-of-type(1) {
+        top: 17px;
+    }
+
+    .openbtn span:nth-of-type(2) {
+        top: 27px;
+    }
+
+    .openbtn span:nth-of-type(3) {
+        top: 37px;
+    }
+
+    .openbtn.active span:nth-of-type(1) {
+        top: 22px;
+        left: 13px;
+        transform: translateY(5px) rotate(-45deg);
+        width: 55%;
+    }
+
+    .openbtn.active span:nth-of-type(3) {
+        top: 32px;
+        left: 13px;
+        transform: translateY(-5px) rotate(45deg);
+        width: 55%;
+    }
+
+    /* ---------- ナビゲーション ---------- */
+    .nav {
+        top: 54px;
+        right: 54px;
+    }
+
+    .openbtn.active + .nav,
+    .nav.active,
+    .nav.panelactive {
+        top: 50%;
+        right: 50%;
+        transform: translate(50%, -50%);
+        width: 300vmax;
+        height: 300vmax;
+        border-radius: 50%;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    #g-navi {
+        width: 100%;
+    }
+
+    #g-navi li {
+        margin: 22px 0;
+    }
+
+    #g-navi a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        color: #0735FD;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-decoration: none;
+    }
+
+    #g-navi img {
+        width: 72px;
+        height: auto;
+    }
+
+    /* ---------- スクロールバー ---------- */
+    .scrollbar-text {
+        right: 24px;
+        padding: 10px 10px 140px;
+        font-size: 14px;
+    }
+
+    .scrollbar {
+        right: 40px;
+        bottom: 50px;
+    }
+
+    .scrollbar::after {
+        height: 80px;
+    }
+
+    /* ---------- ABOUT ---------- */
+    .about_title {
+        top: 24px;
+        padding-left: 24px;
+        font-size: 16px;
+        z-index: 100;
+    }
+
+    .about_title_en,
+    .about_title_jp-word {
+        padding: 2px 6px;
+    }
+
+    .about_title_en {
+        margin-bottom: 6px;
+    }
+
+    .about_title_jp-word {
+        margin-bottom: 6px;
+    }
+
+    section.fixed {
+        height: 100svh;
+        min-height: 680px;
+    }
+
+    .fixed01,
+    .fixed02,
+    .fixed03,
+    .fixed04,
+    .fixed05 {
+        height: 100svh;
+        min-height: 680px;
+        background-size: cover;
+        background-position: center center;
+        background-attachment: scroll;
+    }
+
+    .fixed_area {
+        height: 100%;
+        padding: 110px 24px 80px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 24px;
+        text-align: center;
+    }
+
+    .fixed_img {
+        width: 72%;
+        max-width: 280px;
+        order: 1;
+    }
+
+    .fixed_text {
+        order: 2;
+        width: 100%;
+    }
+
+    .fixed_title {
+        font-size: clamp(26px, 8vw, 38px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .fixed_title_word {
+        justify-content: center;
+        padding: 8px 10px;
+        margin-bottom: 10px;
+        line-height: 1.25;
+    }
+
+    .fixed_body-text {
+        margin-top: 22px;
+        font-size: 14px;
+        line-height: 1.8;
+        text-align: left;
+        display: block;
+        max-width: 330px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .fixed_body-text span {
+        display: inline;
+    }
+
+    .fixed_body-text span::after {
+        content: "";
+    }
+
+    /* ---------- NEXT ---------- */
+    .next_container {
+        bottom: 70px;
+    }
+
+    .next_text {
+        font-size: 16px;
+    }
+
+    .next_triangle {
+        height: 22px;
+    }
+
+    /* ---------- MOVIE ---------- */
+    .movie {
+        padding: 120px 0 100px;
+        min-height: auto;
+    }
+
+    .movie::before {
+        height: 60px;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .movie_title {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: calc(100% - 48px);
+        margin: 0 auto 40px;
+        align-items: flex-end;
+    }
+
+    .movie_title_en {
+        font-size: clamp(56px, 18vw, 86px);
+        padding: 0 8px;
+        line-height: 1;
+    }
+
+    .movie_title_jp {
+        font-size: 15px;
+        padding: 5px;
+        white-space: nowrap;
+    }
+
+    .movie_container {
+        width: calc(100% - 24px);
+        margin-left: 0;
+        padding: 48px 20px 48px 24px;
+        border-radius: 0 9999px 9999px 0;
+    }
+
+    .movie_area {
+        width: 100%;
+        max-width: 100%;
+        aspect-ratio: 16 / 9;
+    }
+
+    .movie_area iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    /* ---------- Footer ---------- */
+    footer {
+        padding: 40px 24px;
+        text-align: center;
+        background: #fff;
+    }
+}
