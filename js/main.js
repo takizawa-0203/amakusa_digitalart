@@ -118,21 +118,22 @@ function goToSection(idx) {
 }
 
 // ── ホイール操作 ────────────────────────────────────────────
+
 window.addEventListener('wheel', function (e) {
+    if (isSP()) return;
     if (isScrolling) return;
 
     const direction = e.deltaY > 0 ? 1 : -1;
     const nextIdx = currentIdx + direction;
 
-    // ✅ 修正: 範囲外は preventDefault を呼ばず通常スクロールを許可
-    // 例）.movie（index 6）でさらに下にスクロールしようとした場合
     if (nextIdx < 0 || nextIdx >= scrollPositions.length) {
         return;
     }
 
-    e.preventDefault(); // 範囲内のときだけブロック
+    e.preventDefault();
     goToSection(nextIdx);
 }, { passive: false });
+
 
 // ── タッチ操作（スマホ対応） ────────────────────────────────
 let touchStartY = 0;
@@ -140,16 +141,25 @@ window.addEventListener('touchstart', function (e) {
     touchStartY = e.touches[0].clientY;
 }, { passive: true });
 
+
 window.addEventListener('touchend', function (e) {
+    if (isSP()) return;
     if (isScrolling) return;
+
     const diff = touchStartY - e.changedTouches[0].clientY;
+
     if (Math.abs(diff) > 40) {
         const direction = diff > 0 ? 1 : -1;
         const nextIdx = currentIdx + direction;
 
-        // ✅ 修正: 範囲内のときだけセクション移動、範囲外は通常スクロール
         if (nextIdx >= 0 && nextIdx < scrollPositions.length) {
             goToSection(nextIdx);
         }
     }
 }, { passive: true });
+
+
+
+function isSP() {
+    return window.innerWidth <= 767;
+}
