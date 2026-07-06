@@ -1,4 +1,4 @@
-// ローディング
+ // ローディング
 $(window).on('load', function () {
     setTimeout(function () {
         $('body').addClass('appear');
@@ -158,8 +158,66 @@ window.addEventListener('touchend', function (e) {
     }
 }, { passive: true });
 
-
-
 function isSP() {
     return window.innerWidth <= 767;
 }
+
+
+// ---- カルーセル機能 ----
+let carouselIndex = 1; // 中央に表示するインデックス
+
+function initCarousel() {
+    const sliderItems = document.querySelectorAll('.slider-item');
+    const total = sliderItems.length;
+
+    sliderItems.forEach((item, idx) => {
+        if (idx === carouselIndex) {
+            item.classList.add('active');
+            item.classList.remove('prev', 'next');
+        } else if (idx < carouselIndex) {
+            item.classList.add('prev');
+            item.classList.remove('active', 'next');
+        } else {
+            item.classList.add('next');
+            item.classList.remove('active', 'prev');
+        }
+    });
+}
+
+function moveCarousel(direction) {
+    const sliderItems = document.querySelectorAll('.slider-item');
+    const total = sliderItems.length;
+
+    carouselIndex += direction;
+
+    // ループ処理
+    if (carouselIndex >= total) {
+        carouselIndex = 0;
+    } else if (carouselIndex < 0) {
+        carouselIndex = total - 1;
+    }
+
+    initCarousel();
+}
+
+// 矢印クリック時の処理
+document.addEventListener('DOMContentLoaded', function () {
+    initCarousel();
+
+    const prevBtn = document.querySelector('.carousel-arrow-prev');
+    const nextBtn = document.querySelector('.carousel-arrow-next');
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => moveCarousel(-1));
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => moveCarousel(1));
+    }
+
+    // キーボード操作（オプション）
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') moveCarousel(-1);
+        if (e.key === 'ArrowRight') moveCarousel(1);
+    });
+});                                                                                                                                                                                                                                                                                                                                                                       
