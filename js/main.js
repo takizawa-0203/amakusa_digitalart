@@ -8,8 +8,9 @@ $(window).on('load', function () {
     }, 3000);
 
     initScrollPositions();
-
-    // リサイズ時に再計算
+    document.fonts.ready.then(function() {
+        initScrollPositions();
+    });
     window.addEventListener('resize', initScrollPositions);
 });
 
@@ -40,17 +41,15 @@ window.addEventListener('scroll', function () {
     }
 });
 
-// ===== 1スクロール = 1セクション移動 =====
+// ===== Aboutセクション(.fixed)のみ 1スクロール = 1セクション移動 =====
 
-let currentIdx = 0;
 let isScrolling = false;
-let scrollPositions = [];
 
 // ── スクロール位置を取得（クロスブラウザ対応）──────────────
 function getScrollTop() {
-    return window.pageYOffset
-        || document.documentElement.scrollTop
-        || document.body.scrollTop
+    return window.pageYOffset 
+        || document.documentElement.scrollTop 
+        || document.body.scrollTop 
         || 0;
 }
 
@@ -61,8 +60,9 @@ function easeInOutCubic(t) {
         : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
-// ── スムーズスクロール（window.scrollTo を使用）─────────────
+// ── スムーズスクロール ─────────────
 function smoothScrollTo(targetTop, duration) {
+    isScrolling = true;
     const startTop = getScrollTop();
     const distance = targetTop - startTop;
     const startTime = performance.now();
@@ -76,15 +76,14 @@ function smoothScrollTo(targetTop, duration) {
             requestAnimationFrame(step);
         } else {
             window.scrollTo(0, targetTop); // 誤差補正
-            isScrolling = false;
+            setTimeout(() => { isScrolling = false; }, 50); 
         }
     }
-
     requestAnimationFrame(step);
 }
 
-// ── 各セクションのスクロール位置をキャッシュ ────────────────
-function initScrollPositions() {
+// ── 各セクションのスクロール位置を動的に計算 ────────────────
+function getScrollPositions() {
     const vh = window.innerHeight;
     const fixedWrapper = document.querySelector('.fixed_wrapper');
     const movie = document.querySelector('.movie');
@@ -98,7 +97,7 @@ function initScrollPositions() {
         ? movie.getBoundingClientRect().top + currentScroll
         : wrapperTop + 5 * vh;
 
-    scrollPositions = [
+    return [
         0,                   // 0: .topview
         wrapperTop,          // 1: .fixed01
         wrapperTop + vh,     // 2: .fixed02
@@ -109,58 +108,118 @@ function initScrollPositions() {
     ];
 }
 
-// ── セクション移動 ──────────────────────────────────────────
-function goToSection(idx) {
-    if (idx < 0 || idx >= scrollPositions.length || isScrolling) return;
-    isScrolling = true;
-    currentIdx = idx;
-    smoothScrollTo(scrollPositions[idx], 800);
-}
-
-// ── ホイール操作 ────────────────────────────────────────────
-
+// ── ホイール操作 (PC) ────────────────────────────────────────────
 window.addEventListener('wheel', function (e) {
-    if (isSP()) return;
-    if (isScrolling) return;
-
-    const direction = e.deltaY > 0 ? 1 : -1;
-    const nextIdx = currentIdx + direction;
-
-    if (nextIdx < 0 || nextIdx >= scrollPositions.length) {
+    if (isScrolling) {
+        e.preventDefault();
         return;
     }
 
-    e.preventDefault();
-    goToSection(nextIdx);
+    const positions = getScrollPositions();
+    const currentScroll = getScrollTop();
+    const direction = e.deltaY > 0 ? 1 : -1;
+
+    const aboutStart = positions[1]; // fixed01
+    const aboutEnd = positions[5];   // fixed05
+    const movieTop = positions[6];   // movie
+
+    // ▼ 1. トップ画面から下へスクロールした瞬間、一気に aboutStart(fixed01) へ吸着
+    if (direction === 1 && currentScroll < aboutStart) {
+        e.preventDefault();
+        smoothScrollTo(aboutStart, 800);
+        return;
+    }
+
+    // ▼ 2. movieセクションの上部から上へスクロールして、.aboutの下端が見えそうなら aboutEnd(fixed05) へ吸着
+    if (direction === -1 && currentScroll > aboutEnd && currentScroll <= movieTop + 50) {
+        e.preventDefault();
+        smoothScrollTo(aboutEnd, 800);
+        return;
+    }
+
+    // ▼ 3. Aboutセクション内にいる場合の判定 (誤差±5pxを許容)
+    const isInAbout = (currentScroll >= aboutStart - 5) && (currentScroll <= aboutEnd + 5);
+
+    if (isInAbout) {
+        e.preventDefault(); // About内ではデフォルトスクロールを停止
+
+        let currentIndex = 1;
+        let minDiff = Infinity;
+        for (let i = 1; i <= 6; i++) {
+            const diff = Math.abs(currentScroll - positions[i]);
+            if (diff < minDiff) {
+                minDiff = diff;
+                currentIndex = i;
+            }
+        }
+
+        const nextIndex = currentIndex + direction;
+
+        if (nextIndex >= 1 && nextIndex <= 6) {
+            smoothScrollTo(positions[nextIndex], 800);
+        } else if (nextIndex < 1) {
+            smoothScrollTo(0, 800); // Topへ戻る
+        }
+    } 
 }, { passive: false });
 
 
 // ── タッチ操作（スマホ対応） ────────────────────────────────
 let touchStartY = 0;
+
 window.addEventListener('touchstart', function (e) {
     touchStartY = e.touches[0].clientY;
 }, { passive: true });
 
-
 window.addEventListener('touchend', function (e) {
-    if (isSP()) return;
     if (isScrolling) return;
 
     const diff = touchStartY - e.changedTouches[0].clientY;
+    
+    // スワイプ距離が短い場合はタップとみなして無視
+    if (Math.abs(diff) < 40) return;
 
-    if (Math.abs(diff) > 40) {
-        const direction = diff > 0 ? 1 : -1;
-        const nextIdx = currentIdx + direction;
+    const positions = getScrollPositions();
+    const currentScroll = getScrollTop();
+    const direction = diff > 0 ? 1 : -1;
 
-        if (nextIdx >= 0 && nextIdx < scrollPositions.length) {
-            goToSection(nextIdx);
+    const aboutStart = positions[1];
+    const aboutEnd = positions[5];
+    const movieTop = positions[6];
+
+    // ▼ 1. トップ画面から下へスワイプした瞬間、一気に aboutStart(fixed01) へ吸着
+    if (direction === 1 && currentScroll < aboutStart) {
+        smoothScrollTo(aboutStart, 500);
+        return;
+    }
+
+    // ▼ 2. movieセクションから上へスワイプして .about の下端が見えそうなら aboutEnd(fixed05) へ吸着
+    if (direction === -1 && currentScroll > aboutEnd && currentScroll <= movieTop + 50) {
+        smoothScrollTo(aboutEnd, 500);
+        return;
+    }
+
+    // ▼ 3. Aboutセクション内にいる場合
+    if (currentScroll >= aboutStart - 5 && currentScroll <= aboutEnd + 5) {
+        let currentIndex = 1;
+        let minDiff = Infinity;
+        for (let i = 1; i <= 6; i++) {
+            const diffAbs = Math.abs(currentScroll - positions[i]);
+            if (diffAbs < minDiff) {
+                minDiff = diffAbs;
+                currentIndex = i;
+            }
+        }
+
+        const nextIndex = currentIndex + direction;
+
+        if (nextIndex >= 1 && nextIndex <= 6) {
+            smoothScrollTo(positions[nextIndex], 500); // スマホは少し早めに設定
+        } else if (nextIndex < 1) {
+            smoothScrollTo(0, 500);
         }
     }
 }, { passive: true });
-
-function isSP() {
-    return window.innerWidth <= 767;
-}
 
 
 // ---- カルーセル機能 ----
