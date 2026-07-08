@@ -175,6 +175,13 @@ body::before {
     height: 80px;
     border-radius: 50px;
     cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.openbtn:hover {
+    background-color: rgba(255, 138, 21, 0.85);  
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);  
 }
 
 /*ボタン内側*/
@@ -289,11 +296,24 @@ body::before {
 
 /* モーション */
 #g-navi li {
+    font-size: 50px;
+    font-weight: 700;
     margin: 20px 0;
     transform: translateY(30px);
     opacity: 0;
     transition: transform 0.5s ease, opacity 0.5s ease;
 }
+
+#g-navi li a{
+    color: #0735FD;
+    text-decoration: none;
+    padding: 0 5px;
+}
+#g-navi li a:hover{
+    color: #ffffff;
+    background-color: #0735FD;
+}
+
 
 /* 順番に出現 */
 .openbtn.active ~ .nav #g-navi li,
@@ -547,25 +567,12 @@ section.fixed {
     position: relative; 
     z-index: 6;
     padding: 350px 0;
-    background-color: #E8E8E8;
+    background-color:rgba(231, 231, 230, 0.95);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-/* .movie::before {
-    content: "";
-    position: absolute;
-    top: -160px;
-    left: 0;
-    width: 100%;
-    height: 400px;
-    background-image: url('../img/circle_deco.png'); 
-    background-size: cover;
-    background-position: center; 
-    background-repeat: no-repeat;
-    z-index: 0;
-} */
 
 .movie_title {
     position: absolute;
@@ -593,20 +600,20 @@ section.fixed {
 }
 
 .movie_container {
-    margin-right: 60px;
     justify-content: center;
     align-items: center;
     width: 100%;
     min-height: 350px;
     background-color: #0735FD;
-    padding: 150px;
+    padding-top:clamp(120px, 9vw, 180px);
+    padding-bottom:clamp(120px, 9vw, 180px);
     border-radius: 0 9999px 9999px 0;
     overflow: hidden;
 }
 
 .movie_area1 {
     width: 100%;
-    max-width: 935px;
+    max-width: 900px;
     aspect-ratio: 16/9;
     margin: 0 auto;
 }
@@ -617,7 +624,7 @@ section.fixed {
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin: 150px auto 0;
+    margin: 120px auto 0;
     position: relative;
     gap: 40px;  /* ← 矢印と動画の間隔 */
     padding: 0 60px;
@@ -684,17 +691,30 @@ section.fixed {
 }
 
 .card_title {
-    display: none;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(14px, 1.5vw, 20px);
+    background-color: #fff;
+    color: #494949;
+    padding: 10px 20px;
+    width: auto;
+    max-width: 90%;
+    text-align: center;
+    z-index: 15;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* 矢印ボタン */
 .carousel-arrow {
-    width: 50px;
-    height: 50px;
-    border: 2px solid #0735FD;
-    background: rgba(255, 255, 255, 0.9);
-    color: #0735FD;
-    font-size: 24px;
+    width: 60px;
+    height: 60px;
+    background:rgba(17, 17, 17, 0.8);
+    color: #ffffff;
+    font-size: 30px;
     font-weight: bold;
     cursor: pointer;
     border-radius: 50%;
@@ -706,19 +726,61 @@ section.fixed {
     flex-shrink: 0;
     border: none;
     padding: 0;
+    border: 3.5px solid #ffffff;
 }
 
 .carousel-arrow:hover {
-    background: #0735FD;
+    background: #EF810F;
     color: #fff;
 }
 
 .carousel-arrow-prev {
     order: -1; 
+    position: absolute;
+    left: 30%;
 }
 
 .carousel-arrow-next {
     order: 1; 
+    position: absolute;
+    right: 30%;
+}
+
+/* ---- データで見る天草 ---- */
+.data_container {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color:rgba(255, 255, 255, 1);
+}
+
+/* データタイトル */
+.data_title {
+    display: flex;
+    align-items: end; 
+    gap: 0px;
+    justify-content: center;
+}
+
+.data_title_en {
+    font-size: 150px;
+    background-color: #fff;
+    padding: 0 10px;
+    line-height: 1;
+}
+
+.data_title_jp {
+    font-size: 25px;
+    color: #fff;
+    background-color: #0735FD;
+    padding: 5px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+
+.data_sec{
+    background-color: aliceblue;
 }
 
 
