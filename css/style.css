@@ -68,7 +68,7 @@ img {
 
 @keyframes floatAnime {
     0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-10px) scale(1.05); } /* 上下に揺れながら少しズーム */
+    50% { transform: translateY(-10px) scale(1.05); }
 }
 
 body.appear #splash::before {
@@ -94,7 +94,7 @@ body.appear #container {
 }
 
 
-/* body */
+/*-------- body -------*/
 body {
     min-width: 320px;
     color: #0735FD;
@@ -239,35 +239,49 @@ body::before {
 /*-------- ナビゲーション -------*/
 .nav {
     position: fixed;
-    top: 100px;
-    right: 100px;
-    width: 0;
-    height: 0;
-    background: #fff;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9); 
     z-index: 1000;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 50%;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.6s ease-in-out;
+    transition: opacity 0.6s ease-in-out, visibility 0.4s ease-in-out;
+}
+
+.openbtn.active + .nav, 
+.nav.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.nav-inner {
+    position: absolute;
+    top: 100px;
+    right: 100px;
+    transform: translate(50%, -50%);
+    width: 0;
+    height: 0;
+    background: #fff;
+    border-radius: 50%;
+    transition: all 0.55s ease-in-out;
 }
 
 .nav.panelactive {
     right: 0;
 }
 
-.openbtn.active + .nav, 
-.nav.active {
+.openbtn.active + .nav .nav-inner, 
+.nav.active .nav-inner {
     top: 50%;
     right: 50%;
     transform: translate(50%, -50%);
-    width: 101vmax;
-    height: 101vmax;
-    border-radius: 50%;
-    opacity: 1;
-    visibility: visible;
+    width: 140vmin; 
+    height: 140vmin;
 }
 
 #g-navi {
@@ -279,8 +293,7 @@ body::before {
     list-style: none;
     padding: 0;
     margin: 0;
-    text-align: center;
-    
+    text-align: center;  
 /*非表示*/
     opacity: 0;
     visibility: hidden;
@@ -306,16 +319,36 @@ body::before {
 #g-navi li a {
     color: #0735FD;
     text-decoration: none;
-    padding: 0 5px;
+    padding: 0 10px 8px;
     display: flex;
     flex-direction: column; 
     align-items: center;
-    gap: 5px; 
+    gap: 5px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1; 
+}
+
+#g-navi li a::after {
+  background: #0735FD;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+  width: 100%;
+  height: 100%;
+  transform: scale(0, 1);
+  transform-origin: left top;
+  transition: .3s cubic-bezier(0.45, 0, 0.55, 1);
+  z-index: -1;
 }
 
 #g-navi li a:hover {
-    color: #ffffff;
-    background-color: #0735FD;
+    color: #fff;
+}
+
+#g-navi li a:hover::after {
+  transform: scale(1, 1);
 }
 
 .navi_text_en {
@@ -323,9 +356,9 @@ body::before {
     line-height: 1;
 }
 
-.nani_text_jp {
+.navi_text_jp {
     font-size: clamp(12px, 1.5vw, 16px);
-    line-height: 1.2;
+    line-height: 1;
 }
 
 
@@ -336,11 +369,11 @@ body::before {
     opacity: 1;
 }
 
-.openbtn.active ~ .nav #g-navi li:nth-child(1), .nav.active #g-navi li:nth-child(1) { transition-delay: 0.5s; }
-.openbtn.active ~ .nav #g-navi li:nth-child(2), .nav.active #g-navi li:nth-child(2) { transition-delay: 0.65s; }
+.openbtn.active ~ .nav #g-navi li:nth-child(1), .nav.active #g-navi li:nth-child(1) { transition-delay: 0.4s; }
+.openbtn.active ~ .nav #g-navi li:nth-child(2), .nav.active #g-navi li:nth-child(2) { transition-delay: 0.6s; }
 .openbtn.active ~ .nav #g-navi li:nth-child(3), .nav.active #g-navi li:nth-child(3) { transition-delay: 0.8s; }
-.openbtn.active ~ .nav #g-navi li:nth-child(4), .nav.active #g-navi li:nth-child(4) { transition-delay: 0.85s; }
-.openbtn.active ~ .nav #g-navi li:nth-child(5), .nav.active #g-navi li:nth-child(5) { transition-delay: 1.0s; }
+.openbtn.active ~ .nav #g-navi li:nth-child(4), .nav.active #g-navi li:nth-child(4) { transition-delay: 1s; }
+.openbtn.active ~ .nav #g-navi li:nth-child(5), .nav.active #g-navi li:nth-child(5) { transition-delay: 1.2s; }
 
 
 /* ------ スクロールバー ------ */
@@ -421,7 +454,7 @@ body::before {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    font-size: clamp(18px, 2vw, 24px);
+    font-size: clamp(18px, 2vw, 22px);
 }
 
 .about_title_en, .about_title_jp-word {
@@ -768,18 +801,25 @@ section.fixed {
 
 /* ---- データで見る天草 ---- */
 .data_container {
+    position: relative;
     justify-content: center;
     align-items: center;
     width: 100%;
     background-color:rgba(255, 255, 255, 1);
+    padding: 60px 0;
 }
 
 /* データタイトル */
 .data_title {
+    position: absolute;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     align-items: end; 
     gap: 0px;
     justify-content: center;
+    z-index: 6;
 }
 
 .data_title_en {
@@ -800,16 +840,93 @@ section.fixed {
 
 .data_contents{
     background-color:#fff;
+    gap:20px;
+    display: flex;
+    flex-wrap: wrap;
+    padding:60px;
+    max-width: 1300px;
+    margin: 0 auto;
 }
 
 .data_sec{
     background-color:rgba(231, 231, 230, 0.95);
+    border-radius: 15px;
+}
+
+.data_sec:nth-child(1),.data_sec:nth-child(2){
+    width: calc(50% - 10px);
+}
+
+.data_src_img:nth-child(1),.data_src_img:nth-child(2){
+    max-width: 400px;
+    min-width: 250px;
+    margin: auto;
 }
 
 
+.data_sec:nth-child(3),.data_sec:nth-child(4),.data_sec:nth-child(5){
+    width: calc(33.3333333333% - 13.3333333333px);
+}
+
+.data_sec_inner{
+    padding:30px;
+    margin:auto;
+    height: 100%;    
+}
+
+.data_sec_title{
+    font-size: 27px;
+    font-weight: 700;
+    text-align: center;
+    background-color: #fff;
+    width: fit-content;
+    padding: 5px 10px;
+    margin: auto;
+}
+
+.data_src_text{
+    text-align: center;
+    margin:auto;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+.data_src_text-b{
+    font-size: 50px;
+    font-weight: 800;
+}
+
+.data_src_text-s{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.data_src_text_access{
+    display: flex;
+    justify-content:space-around;
+}
+
+/* ボタン */
+.data_more_btn{
+    background-color:#494949;
+    color:#fff;
+    font-size: 20px;
+    width: fit-content;
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-weight: 700;
+    margin: auto;
+
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
 /* ==============================
    SP版レスポンシブ
-   767px以下
+   479px以下
 ============================== */
 @media screen and (max-width: 479px) {
 
@@ -957,7 +1074,7 @@ section.fixed {
         font-size: clamp(32px, 10vw, 50px);
     }
     
-    .nani_text_jp {
+    .navi_text_jp {
         font-size: clamp(12px, 3vw, 16px);
     }
 
