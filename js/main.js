@@ -279,4 +279,16 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.key === 'ArrowLeft') moveCarousel(-1);
         if (e.key === 'ArrowRight') moveCarousel(1);
     });
-});                                                                                                                                                                                                                                                                                                                                                                       
+});           
+
+$(".openbtn").click(function () {
+    $(this).toggleClass('active');
+    $("#js_nav").toggleClass('active');
+    $("body").toggleClass('no-scroll');
+});
+
+$("#g-navi li a").click(function () {
+    $(".openbtn").removeClass('active');
+    $("#js_nav").removeClass('active');
+    $("body").removeClass('no-scroll');
+});
