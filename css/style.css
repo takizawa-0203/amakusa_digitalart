@@ -7,7 +7,7 @@ html {
     font-family: "Noto Sans JP", "Alegreya Sans", sans-serif;
     font-feature-settings: "palt";
     width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 :root {
@@ -112,7 +112,7 @@ body {
     color: #0735FD;
     background-color: #fff;
     margin: 0;
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 body::before {
@@ -1100,10 +1100,10 @@ body::before {
 .initiative_sec04::before {
     content: "";
     position: absolute;
-    top: 15%;
-    right: -20%;
+    top: 0%;
+    right: -32%;
     transform: translateY(-50%);
-    width: 65vw;
+    width: 80vw;
     max-width: 1000px;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
@@ -1150,7 +1150,7 @@ body::before {
 } 
 
 .initiative_text{
-    margin: 30px 0 20px;
+    margin: 30px 0 10px;
     color: #fff;
     font-size:1.2rem;
     font-weight: 600;
@@ -1173,7 +1173,7 @@ body::before {
 
 span.initiative_namber{
     font-family: "Inter", sans-serif;
-    font-size: 15rem;
+    font-size: 14rem;
     position: absolute;
     right: 0;
     top: 50px;
