@@ -9,18 +9,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
 </head>
     <!-- body -->
     <body>
-        <div id="splash">
+        <!-- <div id="splash">
             <div class="loading-circle">
                 <img src="img/KV_people_pc.png" alt="ローディングイラスト" class="loading-illustration">
                 <p class="loading-text">loading...</p>
             </div>
-        </div>
+        </div> -->
         <!---画面遷移-->
 
         <header>
@@ -230,6 +231,7 @@
                         <span class="movie_title_jp-word">紹介動画</span>
                         </span>
                     </h2>
+                    <div class="movie_contents">
                     <div class="movie_area1">
                     <iframe
                         width="100%" height="100%" src="https://www.youtube.com/embed/909hSHNoRPk?autoplay=1&mute=1&loop=1&playlist=909hSHNoRPk&controls=0&rel=0&playsinline=1"
@@ -256,6 +258,7 @@
                                 </li>
                             </ul>
                         <button class="carousel-arrow carousel-arrow-next">→</button>
+                    </div>
                     </div>
                 </div>
             </section>
@@ -351,14 +354,13 @@
                                 </div>
                             </section>
                         </div>    
-                        <div class="data_more_btn">
-                        <a href="https://www.city.amakusa.kumamoto.jp/rittiguide/kiji0039118/index.html" target="_blank" rel="noopener noreferrer">
-                            <p class="data_more_btn_t">
-                                詳しく見る
-                            </p>
+                    </div>
+                                           
+                        <a class="data_more_btn" href="https://www.city.amakusa.kumamoto.jp/rittiguide/kiji0039118/index.html" target="_blank" rel="noopener noreferrer">
+                                <p class="data_more_btn_t">
+                                    VIEW MORE
+                                </p>
                         </a>
-                    </div>
-                    </div>
                     
                 </div>
             </section>
@@ -372,12 +374,358 @@
                         </span>
                     </h2>
                     <div class="initiative_contents">
-                        <section class="initiative_sec">
-                            <h3>
-                                <span class="initiative_heading font_en">01</span>
-                                <span class="initiative_heading font_jp">人材育成</span>
-                            </h3>
+                        <section class="initiative_sec initiative_sec01">
+                            <div class="initiative_sec_inline">
+                                <h3 class="initiative_heading">
+                                    <span class="initiative_heading_jp font_jp">人材育成</span>
+                                    <span class="initiative_heading_en font_en">Human Resource Development</span>
+                                </h3>
+                                <span class="initiative_namber font_en">01</span>
+                                <div class="initiative_contents initiative_contents01">
+                                    <div class="initiative_inline">
+                                        <p class="initiative_text">ゲーム・アニメ等の世界観を自ら創造できる力を持った<br>クリエイティブ人材の育成を促進します。</p>
+                                        <p class="initiative_supplement">天草工業高校情報技術科にCGの学びを新設/小中学生・一般向けCG講座、イベントなどの実施/高等教育機関の誘致</p>
+                                        <div class="initiative_slide">
+                                            <ul class="initiative_ul">
+                                                <li class="initiative_li">
+                                                    <div class="initiative_img">
+                                                        <img src="img/initiative_sec01_1.png" alt="天草工業高校にCGの学びを新設">
+                                                    </div>
+                                                    <div class="initiative_caption">
+                                                        天草工業高校にCGの学びを新設
+                                                    </div>
+                                                    <div class="initiative_sentence">
+                                                        CG系列カリキュラムを2024年度に新設。企業と連携し、現役クリエイターが講師を務める充実した教育課程で、企業で活躍するクリエイティブ人材を育成します。
+                                                    </div>
+                                                    <div class="initiative_sentence_link">
+                                                        <a href="https://sh.higo.ed.jp/amakusaths/kyouiku/%E6%83%85%E5%A0%B1%E6%8A%80%E8%A1%93%E7%A7%91" target="_blank" rel="noopener noreferrer">
+                                                            天草工業高校HPはこちら
+                                                        </a>
+                                                        
+                                                    </div>
+                                                </li>
+                                                <li class="initiative_li">
+                                                    <div class="initiative_img">
+                                                        <img src="img/initiative_sec01_2.png" alt="小中学生・一般向けCG講座、イベントの実施">
+                                                    </div>
+                                                    <div class="initiative_caption">
+                                                        小中学生・一般向けCG講座、イベント
+                                                    </div>
+                                                    <div class="initiative_sentence">
+                                                        デジタルアートスクール、CGアカデミー、CG教室、シンポジウムなど小中学生や一般向けのデジタルアート人材育成のイベントを実施しています。
+                                                    </div>
+                                                    <div class="initiative_sentence_link">
+                                                        <a href="https://www.city.amakusa.kumamoto.jp/list00625.html" target="_blank" rel="noopener noreferrer">
+                                                            過去のイベントはこちら
+                                                        </a>
+                                                        
+                                                    </div>
+                                                </li>
+                                                <li class="initiative_li">
+                                                    <div class="initiative_img">
+                                                        <img src="img/initiative_sec01_3.png" alt="高等教育機関の誘致">
+                                                    </div>
+                                                    <div class="initiative_caption">
+                                                        高等教育機関の誘致
+                                                    </div>
+                                                    <div class="initiative_sentence">
+                                                        クリエイターの誘致促進や人材育成体制の構築など事業推進のため、市外の高等教育機関などと連携体制を構築しています。
+                                                    </div>
+                                                    <div class="initiative_sentence_link">
+                                                        <a href="https://www.city.amakusa.kumamoto.jp/rittiguide/kiji00312970/index.html" target="_blank" rel="noopener noreferrer">
+                                                            連携先一覧はこちら
+                                                        </a>
+                                                        
+                                                    </div>
+                                                </li>
+                                            </ul>    
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="initiative_sec initiative_sec02">
+                            <div class="initiative_sec_inline">
+                                <h3 class="initiative_heading">
+                                    <span class="initiative_heading_jp font_jp">クリエイター誘致</span>
+                                    <span class="initiative_heading_en font_en">Creator Attraction</span>
+                                </h3>
+                                <span class="initiative_namber font_en">02</span>
+                                <div class="initiative_contents initiative_contents02">
+                                    <div class="initiative_inline">
+                                        <p class="initiative_text">創造力が高まる制作環境を活かして、<br>市外のクリエイターの誘致を促進します。</p>
+                                        <p class="initiative_supplement">大学・専門学校と連携した人材獲得/クリエイター誘致促進奨励金・視察旅費支援/コンテンツ産業創出応援企業の認定・支援</p>
+                                        <div class="initiative_slide">
+                                            <div class="initiative_slide_title font_jp">
+                                                ＼ 支援・奨励金一覧 ／
+                                            </div>
 
+                                                <ul class="initiative_ul_02 marquee_track">
+                                                    <li class="initiative_li_02 initiative_li_inline01">
+                                                        <div class="money_title">クリエイター誘致促進奨励金</div>
+                                                        <div class="initiative_li_tagline">業界経験3年以上のクリエイターを対象に、天草での活動開始後6か月・2年・3年の節目で計50万円を支給</div>
+                                                    </li>
+                                                    <li class="initiative_li_02 initiative_li_inline02">
+                                                        <div class="money_title">クリエイタースタート奨励金</div>
+                                                        <div class="initiative_li_tagline">指定の高等教育機関などを卒業し、デジタルコンテンツの関連企業に就職した方を対象に、50万円を支給</div>
+                                                    </li>
+                                                    <li class="initiative_li_02 initiative_li_inline03">
+                                                        <div class="money_title">定住促進奨励金</div>
+                                                        <div class="initiative_li_tagline">「空き家等情報バンク制度」を利用して移住する方を対象に、単身10万円・世帯20万円を支給</div>
+                                                    </li>
+                                                    <li class="initiative_li_02 initiative_li_inline04">
+                                                        <div class="money_title">移住支援金</div>
+                                                        <div class="initiative_li_tagline">東京圏から天草市へ移住し、就業・起業等を行う方を対象に、単身に60万円、2人以上の世帯に100万円を支給</div>
+                                                    </li>
+                                                    <li class="initiative_li_02 initiative_li_inline05">
+                                                        <div class="money_title">インターンシップ促進補助金</div>
+                                                        <div class="initiative_li_tagline">指定の教育機関に在籍し、デジタルコンテンツ関連企業のインターンに参加した方を対象に補助金を支給</div>
+                                                    </li>
+                                                    <li class="initiative_li_02 initiative_li_inline06">
+                                                        <div class="money_title">天草市視察ツアー</div>
+                                                        <div class="initiative_li_tagline">地方移住や地方拠点の設立を検討している個人クリエイター・クリエイティブ関連企業向けに、参加費・往復交通費無料の視察ツアーを開催</div>
+                                                    </li></div>
+                                                    </li>
+                                                </ul>
+                                            <a class="data_more_btn" href="https://www.city.amakusa.kumamoto.jp/kiji003761/index.html" target="_blank" rel="noopener noreferrer">
+                                                <p class="data_more_btn_t">
+                                                    VIEW MORE
+                                                </p>
+                                            </a>
+                                        </div><!-- 支援・奨励金一覧 -->
+
+                                        <div class="initiative_comment">
+                                            <div class="initiative_comment_title font_jp">
+                                                ＼ 天草に移住した人の声 ／
+                                            </div>
+                                        </div><!-- 天草に移住した人の声 -->
+                                    </div>                                
+                                    
+                                </div>
+                            </div>
+                        </section>
+                        <section class="initiative_sec initiative_sec03">
+                            <div class="initiative_sec_inline">
+                                <h3 class="initiative_heading">
+                                    <span class="initiative_heading_jp font_jp">企業誘致</span>
+                                    <span class="initiative_heading_en font_en">Industry Hub Formation</span>
+                                </h3>
+                                <span class="initiative_namber font_en">03</span>
+                                <div class="initiative_contents initiative_contents03">
+                                    <div class="initiative_inline">
+                                        <p class="initiative_text">市内でデジタルコンテンツ産業の働く場を創出するために、<br>企業誘致、起業促進等に取り組みます。</p>
+                                        <p class="initiative_supplement">ゲーム・アニメ等制作会社の誘致プロモーション/進出企業の定着サポート/起業支援プログラム</p>
+                                        <div class="initiative_slide">
+                                            <div class="initiative_slide_title font_jp">
+                                                ＼ 進出企業一覧 <span class="initiative_small">2025.1.31時点</span> ／
+                                            </div>
+
+                                            <div class="marquee_wrap">
+                                                <ul class="initiative_ul_03 marquee_track">
+                                                    <li class="initiative_li_03 initiative_li_inline01">
+                                                        <div class="company_title">株式会社ORENDA WORLD</div>
+                                                        <div class="initiative_li_tagline">
+                                                            <img src="img/initiative_sec03_1.png" alt="株式会社ORENDA WORLD">
+                                                            <div class="company_text">
+                                                                CG映像制作/AIソリューション開発 
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="initiative_li_03 initiative_li_inline02">
+                                                        <div class="company_title">有限会社ワンダリウム</div>
+                                                        <div class="initiative_li_tagline">
+                                                            <img src="img/initiative_sec03_2.png" alt="有限会社ワンダリウム">
+                                                            <div class="company_text">
+                                                                映画・テレビ・CM・ゲームのCG制作事業など
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="initiative_li_03 initiative_li_inline03">
+                                                        <div class="company_title">株式会社GADGET</div>
+                                                        <div class="initiative_li_tagline">
+                                                            <img src="img/initiative_sec03_3.png" alt="株式会社GADGET">
+                                                            <div class="company_text">
+                                                                	3D映像制作事業/音声合成事業 
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="initiative_li_03 initiative_li_inline04">
+                                                        <div class="company_title">株式会社D-HORIZON</div>
+                                                        <div class="initiative_li_tagline">
+                                                            <img src="img/initiative_sec03_4.png" alt="株式会社D-HORIZON">
+                                                            <div class="company_text">
+                                                                クリエイター教育事業/映像・CG制作/WEBページ制作など
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="initiative_li_03 initiative_li_inline05">
+                                                        <div class="company_title">ワワ科技株式会社</div>
+                                                        <div class="initiative_li_tagline">
+                                                            <img src="img/initiative_sec03_5.png" alt="ワワ科技株式会社">
+                                                            <div class="company_text">
+                                                                	ゲーム開発/AR・VRソフトウェア開発/2D・3Dアニメーションなど
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="initiative_li_03 initiative_li_inline06">
+                                                        <div class="company_title">合同会社Studio Treant</div>
+                                                        <div class="initiative_li_tagline">
+                                                            <img src="img/initiative_sec03_6.png" alt="合同会社Studio Treant">
+                                                            <div class="company_text">
+                                                                ソフト受託開発/デジタルコンテンツ企画・制作など
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                                    <!-- ↓ ここから複製同じ5枚 -->
+                                                    <li class="initiative_li_03 initiative_li_inline01">
+                                                        <div class="company_title">株式会社ORENDA WORLD</div>
+                                                        <div class="initiative_li_tagline">
+                                                            <img src="img/initiative_sec03_1.png" alt="株式会社ORENDA WORLD">
+                                                            <div class="company_text">
+                                                                CG映像制作/AIソリューション開発 
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="initiative_li_03 initiative_li_inline02">
+                                                        <div class="company_title">有限会社ワンダリウム</div>
+                                                        <div class="initiative_li_tagline">
+                                                            <img src="img/initiative_sec03_2.png" alt="有限会社ワンダリウム">
+                                                            <div class="company_text">
+                                                                映画・テレビ・CM・ゲームのCG制作事業など
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="initiative_li_03 initiative_li_inline03">
+                                                        <div class="company_title">株式会社GADGET</div>
+                                                        <div class="initiative_li_tagline">
+                                                            <img src="img/initiative_sec03_3.png" alt="株式会社GADGET">
+                                                            <div class="company_text">
+                                                                	3D映像制作事業/音声合成事業 
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="initiative_li_03 initiative_li_inline04">
+                                                        <div class="company_title">株式会社D-HORIZON</div>
+                                                        <div class="initiative_li_tagline">
+                                                            <img src="img/initiative_sec03_4.png" alt="株式会社D-HORIZON">
+                                                            <div class="company_text">
+                                                                クリエイター教育事業/映像・CG制作/WEBページ制作など
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="initiative_li_03 initiative_li_inline05">
+                                                        <div class="company_title">ワワ科技株式会社</div>
+                                                        <div class="initiative_li_tagline">
+                                                            <img src="img/initiative_sec03_5.png" alt="ワワ科技株式会社">
+                                                            <div class="company_text">
+                                                                	ゲーム開発/AR・VRソフトウェア開発/2D・3Dアニメーションなど
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="initiative_li_03 initiative_li_inline06">
+                                                        <div class="company_title">合同会社Studio Treant</div>
+                                                        <div class="initiative_li_tagline">
+                                                            <img src="img/initiative_sec03_6.png" alt="合同会社Studio Treant">
+                                                            <div class="company_text">
+                                                                ソフト受託開発/デジタルコンテンツ企画・制作など
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <a class="data_more_btn" href="https://www.city.amakusa.kumamoto.jp/rittiguide/list01117.html" target="_blank" rel="noopener noreferrer">
+                                                <p class="data_more_btn_t">
+                                                    VIEW MORE
+                                                </p>
+                                            </a>
+                                        </div><!-- 誘致企業一覧 -->
+                                        <div class="support">
+                                            <div class="initiative_comment_title font_jp">
+                                                ＼ 充実の拠点開設支援策 ／
+                                            </div>
+                                            <ul class="support_ul">
+                                                <li class="support_list">
+                                                    <div class="support_title">雇用奨励金</div>
+                                                    <div class="initiative_li_tagline">
+                                                        <div class="support_text">
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="support_list">
+                                                    <div class="support_title">サテライトオフィス推進事業補助金</div>
+                                                    <div class="initiative_li_tagline">
+                                                        <div class="support_text">
+                                                            市内へのサテライトオフィス設置に対し、改修費・設備導入費・賃料・雇用・操業支援などを補助
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="support_list">
+                                                    <div class="support_title">株式会社GADGET</div>
+                                                    <div class="initiative_li_tagline">
+                                                        <div class="support_text">
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="support_list">
+                                                    <div class="support_title">天草エアライン支援</div>
+                                                    <div class="initiative_li_tagline">
+                                                        <div class="support_text">
+                                                            年間10往復まで福岡から天草までの
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div><!-- 企業支援策 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="initiative_sec initiative_sec04">
+                            <div class="initiative_sec_inline">
+                                <h3 class="initiative_heading initiative_heading04">
+                                    <span class="initiative_heading_jp font_jp initiative_heading04"><span class="initiative_span04">官民合同事業</span><br><span class="initiative_span04">推進会社の設立</span></span>
+                                    <span class="initiative_heading_en font_en">Public–Private Collaboration</span>
+                                </h3>
+                                <span class="initiative_namber font_en">04</span>
+                                <div class="initiative_contents initiative_contents01">
+                                    
+                                    <div class="initiative_inline">
+                                        <p class="initiative_text">同事業の推進主体として、<br>官民合同で一般社団法人デジタルアート天草を設立・運営します。</p>
+                                        <p class="initiative_supplement">同事業の総合的な推進機能/人材育成機能、都市部と地方の人材還流機能/働く場としてCG制作会社機能</p>
+                                        <div class="initiative_slide">
+                                            <ul class="initiative_ul">
+                                                <li class="initiative_li">
+                                                    <div class="initiative_img">
+                                                        <img src="img/initiative_sec02_1.png" alt="同事業の総合的な推進機能">
+                                                    </div>
+                                                    <div class="initiative_caption">
+                                                        同事業の総合的な推進機能
+                                                    </div>
+                                                </li>
+                                                <li class="initiative_li">
+                                                    <div class="initiative_img">
+                                                        <img src="img/initiative_sec02_2.png" alt="人材育成機能、都市部と地方の人材還流機能">
+                                                    </div>
+                                                    <div class="initiative_caption">
+                                                        人材育成機能、都市部と地方の人材還流機能
+                                                    </div>
+                                                </li>
+                                                <li class="initiative_li">
+                                                    <div class="initiative_img">
+                                                        <img src="img/initiative_sec02_3.png" alt="働く場としてCG制作会社機能">
+                                                    </div>
+                                                    <div class="initiative_caption">
+                                                        働く場としてCG制作会社機能
+                                                    </div>
+                                                </li>
+                                            </ul>    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </section>
                     </div>
                 </div>
@@ -392,6 +740,7 @@
             </div>      
         </footer>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
         <script src="js/main.js"></script>
         
     </body>
