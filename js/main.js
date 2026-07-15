@@ -1,28 +1,40 @@
- // ローディング
+// ===== 実際の表示領域の高さを --vh にセット =====
+// (dvh/svhがブラウザによって正確に効かない場合があるため、JSで実測して補完する)
+function setViewportHeight() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+setViewportHeight();
+window.addEventListener('resize', setViewportHeight);
+window.addEventListener('orientationchange', function () {
+    setTimeout(setViewportHeight, 100);
+});
+// iOSでアドレスバーの表示状態が確定した後に再計算（読み込み直後のズレ対策）
+window.addEventListener('load', function () {
+    setTimeout(setViewportHeight, 300);
+});
+
+// ローディング
 $(window).on('load', function () {
     setTimeout(function () {
         $('body').addClass('appear');
         setTimeout(function () {
             $("#splash").hide();
         }, 1000);
-    }, 3000);
-
-    initScrollPositions();
-    document.fonts.ready.then(function() {
-        initScrollPositions();
-    });
-    window.addEventListener('resize', initScrollPositions);
+    }, 1000);
 });
 
 // ハンバーガーメニュー
 $(function () {
     $(".openbtn").on("click", function () {
         $(this).toggleClass("active");
-        $("#js_nav").toggleClass("panelactive");
+        $("#js_nav").toggleClass("panelactive active");
+        $("body").toggleClass("no-scroll");
     });
     $("#g-navi a").on("click", function () {
         $(".openbtn").removeClass("active");
-        $("#js_nav").removeClass("panelactive");
+        $("#js_nav").removeClass("panelactive active");
+        $("body").removeClass("no-scroll");
     });
 });
 
@@ -83,32 +95,40 @@ function smoothScrollTo(targetTop, duration) {
 }
 
 // ── 各セクションのスクロール位置を動的に計算 ────────────────
+
 function getScrollPositions() {
-    const vh = window.innerHeight;
     const fixedWrapper = document.querySelector('.fixed_wrapper');
+    const fixedItems = document.querySelectorAll('.fixed');
     const movie = document.querySelector('.movie');
     const currentScroll = getScrollTop();
 
     const wrapperTop = fixedWrapper
         ? fixedWrapper.getBoundingClientRect().top + currentScroll
-        : vh;
+        : window.innerHeight;
+
+    // 実際の .fixed の高さを取得
+    const fixedHeight = fixedItems.length
+        ? fixedItems[0].offsetHeight
+        : window.innerHeight;
 
     const movieTop = movie
         ? movie.getBoundingClientRect().top + currentScroll
-        : wrapperTop + 5 * vh;
+        : wrapperTop + fixedHeight * 5;
 
     return [
-        0,                   // 0: .topview
-        wrapperTop,          // 1: .fixed01
-        wrapperTop + vh,     // 2: .fixed02
-        wrapperTop + vh * 2, // 3: .fixed03
-        wrapperTop + vh * 3, // 4: .fixed04
-        wrapperTop + vh * 4, // 5: .fixed05
-        movieTop             // 6: .movie
+        0,                         // 0: .topview
+        wrapperTop,                // 1: .fixed01
+        wrapperTop + fixedHeight,  // 2: .fixed02
+        wrapperTop + fixedHeight * 2,
+        wrapperTop + fixedHeight * 3,
+        wrapperTop + fixedHeight * 4,
+        movieTop                   // 6: .movie
     ];
 }
 
+
 // ── ホイール操作 (PC) ────────────────────────────────────────────
+
 window.addEventListener('wheel', function (e) {
     if (isScrolling) {
         e.preventDefault();
@@ -119,32 +139,37 @@ window.addEventListener('wheel', function (e) {
     const currentScroll = getScrollTop();
     const direction = e.deltaY > 0 ? 1 : -1;
 
-    const aboutStart = positions[1]; // fixed01
-    const aboutEnd = positions[5];   // fixed05
-    const movieTop = positions[6];   // movie
+    const aboutStart = positions[1];
+    const aboutEnd = positions[5];
+    const movieTop = positions[6];
 
-    // ▼ 1. トップ画面から下へスクロールした瞬間、一気に aboutStart(fixed01) へ吸着
-    if (direction === 1 && currentScroll < aboutStart) {
+    // topviewから下にスクロールしたら fixed01 へ
+    if (direction === 1 && currentScroll < aboutStart - 5) {
         e.preventDefault();
         smoothScrollTo(aboutStart, 800);
         return;
     }
 
-    // ▼ 2. movieセクションの上部から上へスクロールして、.aboutの下端が見えそうなら aboutEnd(fixed05) へ吸着
-    if (direction === -1 && currentScroll > aboutEnd && currentScroll <= movieTop + 50) {
+    // movieの先頭付近から上に戻る時だけ fixed05 へ戻す
+    if (
+        direction === -1 &&
+        currentScroll >= movieTop - 5 &&
+        currentScroll <= movieTop + 80
+    ) {
         e.preventDefault();
         smoothScrollTo(aboutEnd, 800);
         return;
     }
 
-    // ▼ 3. Aboutセクション内にいる場合の判定 (誤差±5pxを許容)
-    const isInAbout = (currentScroll >= aboutStart - 5) && (currentScroll <= aboutEnd + 5);
+    // About内だけスナップスクロール
+    const isInAbout = currentScroll >= aboutStart - 5 && currentScroll < movieTop - 5;
 
     if (isInAbout) {
-        e.preventDefault(); // About内ではデフォルトスクロールを停止
+        e.preventDefault();
 
         let currentIndex = 1;
         let minDiff = Infinity;
+
         for (let i = 1; i <= 6; i++) {
             const diff = Math.abs(currentScroll - positions[i]);
             if (diff < minDiff) {
@@ -158,25 +183,26 @@ window.addEventListener('wheel', function (e) {
         if (nextIndex >= 1 && nextIndex <= 6) {
             smoothScrollTo(positions[nextIndex], 800);
         } else if (nextIndex < 1) {
-            smoothScrollTo(0, 800); // Topへ戻る
+            smoothScrollTo(0, 800);
         }
-    } 
+    }
 }, { passive: false });
+
 
 
 // ── タッチ操作（スマホ対応） ────────────────────────────────
 let touchStartY = 0;
-
 window.addEventListener('touchstart', function (e) {
     touchStartY = e.touches[0].clientY;
 }, { passive: true });
+
 
 window.addEventListener('touchend', function (e) {
     if (isScrolling) return;
 
     const diff = touchStartY - e.changedTouches[0].clientY;
-    
-    // スワイプ距離が短い場合はタップとみなして無視
+
+    // スワイプ距離が短い場合は無視
     if (Math.abs(diff) < 40) return;
 
     const positions = getScrollPositions();
@@ -187,22 +213,29 @@ window.addEventListener('touchend', function (e) {
     const aboutEnd = positions[5];
     const movieTop = positions[6];
 
-    // ▼ 1. トップ画面から下へスワイプした瞬間、一気に aboutStart(fixed01) へ吸着
-    if (direction === 1 && currentScroll < aboutStart) {
-        smoothScrollTo(aboutStart, 500);
+    // topviewから下へスワイプしたら fixed01 へ
+    if (direction === 1 && currentScroll < aboutStart - 5) {
+        smoothScrollTo(aboutStart, 600);
         return;
     }
 
-    // ▼ 2. movieセクションから上へスワイプして .about の下端が見えそうなら aboutEnd(fixed05) へ吸着
-    if (direction === -1 && currentScroll > aboutEnd && currentScroll <= movieTop + 50) {
-        smoothScrollTo(aboutEnd, 500);
+    // movie先頭付近から上へ戻る時だけ fixed05 へ
+    if (
+        direction === -1 &&
+        currentScroll >= movieTop - 5 &&
+        currentScroll <= movieTop + 80
+    ) {
+        smoothScrollTo(aboutEnd, 600);
         return;
     }
 
-    // ▼ 3. Aboutセクション内にいる場合
-    if (currentScroll >= aboutStart - 5 && currentScroll <= aboutEnd + 5) {
+    // About内だけ1スワイプ = 1セクション
+    const isInAbout = currentScroll >= aboutStart - 5 && currentScroll < movieTop - 5;
+
+    if (isInAbout) {
         let currentIndex = 1;
         let minDiff = Infinity;
+
         for (let i = 1; i <= 6; i++) {
             const diffAbs = Math.abs(currentScroll - positions[i]);
             if (diffAbs < minDiff) {
@@ -214,12 +247,13 @@ window.addEventListener('touchend', function (e) {
         const nextIndex = currentIndex + direction;
 
         if (nextIndex >= 1 && nextIndex <= 6) {
-            smoothScrollTo(positions[nextIndex], 500); // スマホは少し早めに設定
+            smoothScrollTo(positions[nextIndex], 600);
         } else if (nextIndex < 1) {
-            smoothScrollTo(0, 500);
+            smoothScrollTo(0, 600);
         }
     }
 }, { passive: true });
+
 
 
 // ---- カルーセル機能 ----
@@ -230,15 +264,21 @@ function initCarousel() {
     const total = sliderItems.length;
 
     sliderItems.forEach((item, idx) => {
-        if (idx === carouselIndex) {
+        // 現在のactiveから見た円環距離（ループを考慮した相対位置）を求める
+        const diff = (idx - carouselIndex + total) % total;
+
+        item.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next');
+
+        if (diff === 0) {
             item.classList.add('active');
-            item.classList.remove('prev', 'next');
-        } else if (idx < carouselIndex) {
-            item.classList.add('prev');
-            item.classList.remove('active', 'next');
-        } else {
+        } else if (diff === 1) {
             item.classList.add('next');
-            item.classList.remove('active', 'prev');
+        } else if (diff === total - 1) {
+            item.classList.add('prev');
+        } else if (diff <= total / 2) {
+            item.classList.add('far-next');
+        } else {
+            item.classList.add('far-prev');
         }
     });
 }
@@ -279,16 +319,4 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.key === 'ArrowLeft') moveCarousel(-1);
         if (e.key === 'ArrowRight') moveCarousel(1);
     });
-});           
-
-$(".openbtn").click(function () {
-    $(this).toggleClass('active');
-    $("#js_nav").toggleClass('active');
-    $("body").toggleClass('no-scroll');
-});
-
-$("#g-navi li a").click(function () {
-    $(".openbtn").removeClass('active');
-    $("#js_nav").removeClass('active');
-    $("body").removeClass('no-scroll');
 });
