@@ -6,6 +6,8 @@ html {
     font-size: clamp(12px, 1.5vw, 16px);
     font-family: "Noto Sans JP", "Alegreya Sans", sans-serif;
     font-feature-settings: "palt";
+    width: 100%;
+    overflow-x: hidden;
 }
 
 :root {
@@ -105,6 +107,7 @@ body.appear #container {
 
 /*-------- body -------*/
 body {
+    width: 100%;
     min-width: 320px;
     color: #0735FD;
     background-color: #fff;
