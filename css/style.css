@@ -1591,7 +1591,7 @@ body.no-scroll {
     }
 
     /* ---------- ナビゲーション ---------- */
-    .nav {
+    .nav-inner {
         top: 54px;
         right: 54px;
     }
