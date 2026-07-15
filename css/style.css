@@ -1919,6 +1919,135 @@ body.no-scroll {
         white-space: nowrap;
     }
 
+    /* ---- 各施策 本文共通 ---- */
+    .initiative_sec_inline {
+        width: 88%;
+        padding: 80px 0;
+    }
+
+    .initiative_sec01::before,
+    .initiative_sec02::before,
+    .initiative_sec03::before,
+    .initiative_sec04::before {
+        width: 90vw;
+        top: 8%;
+        right: -30%;
+    }
+
+    .initiative_heading_jp {
+        font-size: clamp(26px, 8vw, 38px);
+        padding: 0 12px;
+        margin-bottom: 8px;
+    }
+
+    .initiative_heading_en {
+        font-size: clamp(13px, 4vw, 17px);
+    }
+
+    .initiative_heading04 .initiative_span04 {
+        padding: 0 12px;
+    }
+
+    .initiative_heading04 span span:nth-of-type(2) {
+        margin-top: 6px;
+    }
+
+    span.initiative_namber {
+        font-size: clamp(70px, 24vw, 110px);
+        top: 10px;
+    }
+
+    .initiative_text {
+        margin: 20px 0 12px;
+        font-size: clamp(14px, 4vw, 16px);
+        line-height: 1.8;
+        letter-spacing: 0.05em;
+    }
+
+    .initiative_supplement {
+        font-size: 11px;
+        line-height: 1.7;
+        letter-spacing: 0.05rem;
+    }
+
+    .initiative_sentence {
+        font-size: 12.5px;
+        line-height: 1.75;
+    }
+
+    /* ---- 01・04: 画像＋キャプションのリスト ---- */
+    .initiative_ul {
+        flex-direction: column;
+        gap: 30px;
+        margin-top: 50px;
+    }
+
+    .initiative_li {
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+    /* ---- 見出し「支援・奨励金一覧」「進出企業一覧」「移住した人の声」 ---- */
+    .initiative_slide_title,
+    .initiative_comment_title {
+        font-size: clamp(18px, 5.5vw, 24px);
+        margin: 50px 0 25px;
+        letter-spacing: 0.08rem;
+    }
+
+    .initiative_comment {
+        padding: 30px 0;
+    }
+
+    /* ---- 02: 支援・奨励金カード ---- */
+    .initiative_ul_02 {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin-bottom: 40px;
+    }
+
+    .initiative_li_02 {
+        padding: 25px 20px;
+    }
+
+    .money_title,
+    .company_title {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+
+    .initiative_li_tagline {
+        font-size: 13px;
+        line-height: 1.75;
+    }
+
+    /* ---- 03: 進出企業マーキー ---- */
+    .initiative_li_03 {
+        width: 260px;
+        padding: 25px 20px 30px;
+    }
+
+    .company_text {
+        font-size: 12px;
+    }
+
+    /* ---- 03: 拠点開設支援策 ---- */
+    .support_ul {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .support_list {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .support_title {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+
 }
 
 
