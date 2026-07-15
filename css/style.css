@@ -1488,7 +1488,7 @@ body.no-scroll {
         height: 100%;
         background-image: url(../img/KV_effect_sp.png), url(../img/sp_bg.jpg);
         background-size: cover;
-        background-attachment: fixed;
+        background-attachment: scroll;
         background-position: center center;
     }
 
@@ -1519,7 +1519,7 @@ body.no-scroll {
     height: 100svh;
     background-image: url(../img/KV_people_sp.png) ;
     background-size: cover;
-    background-attachment: fixed;
+    background-attachment: scroll;
     background-position: center center;
 }
 
@@ -1924,4 +1924,19 @@ footer {
     padding: 40px 24px;
     text-align: center;
     background: #fff;
+}
+
+/* ==============================
+   iOS Safari 対応:
+   background-attachment: fixed は iOS Safari で
+   overflow:hidden を持つ祖先要素があると背景が
+   描画されなくなる既知の不具合があるため、
+   iOS系ブラウザ(WebKit)のみ scroll に切り替える。
+   (幅に関わらず横向き表示なども含めて対応)
+============================== */
+@supports (-webkit-touch-callout: none) {
+    body::before,
+    .keyv {
+        background-attachment: scroll;
+    }
 }
