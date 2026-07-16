@@ -21,8 +21,8 @@ $(function () {
             $('body').addClass('appear');
             setTimeout(function () {
                 $("#splash").hide();
-            }, 1000);
-        }, 1000);        
+            }, 5000);
+        }, 5000);        
         sessionStorage.setItem('visited', 'true');
     } else {
         $("#splash").hide();
