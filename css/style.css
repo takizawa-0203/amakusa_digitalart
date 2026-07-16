@@ -791,23 +791,10 @@ body::before {
     border-radius: 8px;
 }
 
-.card_title {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: clamp(14px, 1.5vw, 20px);
-    background-color: #fff;
-    color: #494949;
-    padding: 10px 20px;
-    width: auto;
-    max-width: 90%;
-    text-align: center;
-    z-index: 15;
-    margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+ .card_title {
+    display: none;
+ }
+
 
 /* 矢印ボタン */
 .carousel-arrow {
@@ -947,7 +934,7 @@ body::before {
 }
 
 .data_sec_title{
-    font-size:1.55rem;
+    font-size:1.5rem;
     font-weight: 700;
     text-align: center;
     background-color: #0735FD;
@@ -1181,7 +1168,7 @@ span.initiative_namber{
 }
 
 .initiative_inline p{
-    width: 72%;
+    width: 80%;
 }
 
 .initiative_supplement{
@@ -1233,16 +1220,16 @@ span.initiative_namber{
     color: #ffffff;
     text-decoration: none;
     padding: 4px 2px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.6);
     background-color: transparent;
     border-radius: 0;
     transition: border-color 0.3s ease, opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .initiative_sentence_link a::after {
-    content: "→";
+    content: " →"; 
     font-size: 0.9em;
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: inline-block;
 }
 
 .initiative_sentence_link a:hover {
@@ -1331,12 +1318,17 @@ span.initiative_namber{
 }
 
 .initiative_li_02{
+    position: relative; 
+    z-index: 1;
+    overflow: hidden; 
+    isolation: isolate;
     width: 100%;
     color: #fff;
     list-style: none;
     padding:35px 25px 30px;
     line-height: 1.7;
     letter-spacing: 0.08rem;
+    border-radius: 15px;
 }
 .initiative_li_tagline{
     color: #fff;
@@ -1353,6 +1345,34 @@ span.initiative_namber{
 .initiative_comment {
     padding: 60px 0;
 }
+
+.initiative_li_02 span{
+    border-bottom: 1.5px solid #fff;
+}
+
+.initiative_li_02[class*="initiative_li_inline"]::before {
+    position: absolute;
+    bottom: -25px;
+    right: -10px;
+    font-family: "Inter", sans-serif;
+    font-size: 11rem; 
+    font-weight: 800; 
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.15);
+    z-index: -1;          
+    pointer-events: none;  
+}
+
+/* 各カード個別の数字設定 (content属性を使用) */
+.initiative_li_02.initiative_li_inline01::before { 
+    content: "1"; 
+    right: 0px;
+}
+.initiative_li_inline02::before { content: "2"; }
+.initiative_li_inline03::before { content: "3"; }
+.initiative_li_inline04::before { content: "4"; }
+.initiative_li_inline05::before { content: "5"; }
+.initiative_li_inline06::before { content: "6"; }
 
 /*-------- 03 -------*/
 .initiative_small{
@@ -1423,32 +1443,77 @@ span.initiative_namber{
     display: flex;
     gap: 20px;
     padding: 0;
+    margin-bottom: 40px;
 }
 
 .support_list{
     background-color: #fff;
-    padding: 20px;
+    padding:30px 25px;
     list-style: none;
-    width: 300px;
+    width: 100%;
     border-radius: 15px;
 }
 
 .support_title{
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 30px;
 }
 
 .support_text{
     color: #0735fd;
+    line-height: 1.5rem;
+    font-size: 0.9rem;
 }
 
 .support{
     padding: 60px 0 0;
 }
 
+.support_list span{
+    border-bottom: 1.5px solid;
+}
+
 
 /*-------- 04 -------*/
+.supplement_inline{
+    padding-top: 60px;
+}
+
+.supplement_sec{
+    display: flex;
+    width: 100%;
+    height: 600px;
+    background-color:#c3e529;
+    margin:40px 0;
+    border-radius: 30px;
+}
+
+.supplement_img{
+    width: 45%;
+}
+.supplement_textbox{
+    width: 55%;
+    height: 100%;
+}
+
+.supplement_img img{
+    border-radius: 30px 0 0 30px;
+    width: 100%;
+    height: 600px;
+}
+
+.supplement_textbox{
+    padding: 80px 40px;
+}
+
+.supplement_title{
+    font-size:2.2rem;
+    letter-spacing: 0.05rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 40px;
+}
 
 body.no-scroll {
     overflow: hidden;
@@ -1459,7 +1524,7 @@ body.no-scroll {
    900px以下
 ============================== */
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 950px) {
     .fixed_area {
         flex-direction: column;
         text-align: center;
@@ -1467,14 +1532,52 @@ body.no-scroll {
     }
 
     .fixed_img {
-        width: 60%;
-        max-width: 280px;
+        width: 80%;
+        max-width: 300px;
     }
+    .fixed_title_word{
+        margin-bottom: 10px;
+    }
+    .fixed_body-text{
+        margin-top: 25px;
+        text-align: left;
+    }
+
+    .fixed_title03::before {
+        content: "";
+        display: block;
+        background-image: url(../img/fixed_deco.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 120px;
+        height: 95px;
+        position: absolute;
+        top: 40%;
+        left: 24%;
+    }
+
+    .next_container{
+        bottom: 70px;
+    }
+
+    .next_triangle{
+        height: 25px;
+    } 
 
     .movie_area1 {
         width: min(80%, 700px);
         max-height: 45vh;
     }
+
+    .data_contents_flex:nth-of-type(2) {
+        flex-direction: column; 
+        gap: 30px;            
+    }
+
+    .data_contents_flex:nth-of-type(2) .data_sec {
+        width: 100%;    
+    }
+
 }
 
 
