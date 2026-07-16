@@ -33,7 +33,6 @@ html {
 img {
     max-width: 100%;
 }
-
 /*-------- ローディング -------*/
 #splash {
     position: fixed;
@@ -58,52 +57,80 @@ img {
                 height 1.1s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-.loading-circle {
+/* 縦並び・中央配置を管理するラッパー */
+.loading-wrapper {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 300px;
-    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px; /* 画像とテキストの間隔 */
+}
+
+.loading-circle {
+    width: 220px;
+    height: 220px;
     border-radius: 50%;
     overflow: hidden;
+    border: 4px solid #fff;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    /* 立体的な回転に見せるための奥行き設定 */
+    perspective: 1000px; 
 }
 
 .loading-illustration {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    animation: floatAnime 3s ease-in-out infinite;
+    /* Y軸（縦軸）でくるっと3D回転 */
+    animation: coinSpin 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-@keyframes floatAnime {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-10px) scale(1.05); }
+/* 3D回転アニメーション（回転した後に少しお休みする時間をキープ） */
+@keyframes coinSpin {
+    0% {
+        transform: rotateY(0deg);
+    }
+    40%, 100% {
+        transform: rotateY(360deg); /* 40%の時点で回りきり、残り時間は正面をキープ */
+    }
 }
 
+/* loading... 文字 */
+.loading-text {
+    color: #ffffff;
+    font-family: "Alegreya Sans", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0;
+    /* 文字は回転させず、文字自体の間隔が広がるアニメーションで大人っぽく */
+    animation: letterStretch 2.2s ease-in-out infinite;
+}
+
+@keyframes letterStretch {
+    0%, 100% {
+        letter-spacing: 0.18em;
+        opacity: 0.7;
+    }
+    40% {
+        letter-spacing: 0.3em;
+        opacity: 1;
+    }
+}
 body.appear #splash::before {
     width: 300vmax;
     height: 300vmax;
 }
 
-body.appear .loading-circle {
+/* ラッパーごとフェードアウト */
+body.appear .loading-wrapper {
     opacity: 0;
     transition: opacity 0.5s ease;
 }
-#container {
-    opacity: 0;
-}
-
-body.appear #container {
-    animation: PageAnimeAppear 0.6s 0.3s forwards;
-}
-
-@keyframes PageAnimeAppear {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
-
 
 /*-------- body -------*/
 body {
@@ -478,11 +505,6 @@ body::before {
     position: static !important;
 }
 
-.sticky-wrapper {
-    position: relative;
-    width: 100%;
-}
-
 /* タイトル */
 .about_title {
     position: -webkit-sticky;
@@ -563,14 +585,14 @@ body::before {
     width: 80%;
     margin: auto;
     height: 100%;
-    gap: clamp(15px, 3vw, 30px);
-    flex-wrap: wrap; 
+    gap: clamp(15px, 3vw, 50px);
+    flex-wrap: nowrap; /* PC幅では絶対に折り返さず横並びをキープ */
 }
 /* about img */
 .fixed_img {
     width: clamp(180px, 28vw, 450px); 
     max-width: 450px;
-    flex-shrink: 1; 
+    flex-shrink: 0; /* 画像が縮みすぎないようにする */
     flex-basis: clamp(180px, 28vw, 450px);
 }
 
@@ -604,17 +626,28 @@ body::before {
     line-height: 1.8;
 }
 
-.fixed_title03::before{
+.fixed_text {
+    flex-grow: 1;
+    max-width: 600px; /* テキスト領域が広がりすぎないように制限 */
+}
+
+.fixed_title03 {
+    position: relative;
+    z-index: 1;
+}
+
+.fixed_title03::before {
     content: "";
     display: block;
     background-image: url(../img/fixed_deco.png);
     background-size: contain;
     background-repeat: no-repeat;
-    width: 100%;
+    width: 200px;  /* 適切な横幅に固定します */
     height: 120px;
-    position: relative;
-    top:0px;
-    left: -80px;
+    position: absolute; /* 絶対配置に変更 */
+    top: -115px;         /* タイトルの上部にズラして配置 */
+    left: -45px;        /* 左側にズラして配置 */
+    z-index: -1;        /* テキストの背面に回り込ませる */
 }
 
 .small-percent {
@@ -820,6 +853,7 @@ body::before {
 
 
 /* 矢印ボタン */
+
 .carousel-arrow {
     width: 60px;
     height: 60px;
@@ -838,13 +872,26 @@ body::before {
     border: none;
     padding: 0;
     border: 3.5px solid #ffffff;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, border-color 0.3s ease;
+    background-size: 300% 300%;
+    background-position: 100% 100%;
+    background-image: linear-gradient(
+        135deg, 
+        rgba(17, 17, 17, 0.75) 0%, 
+        rgba(17, 17, 17, 0.75) 40%, 
+        #ff1493 45%, 
+        #ff8a15 49%, 
+        #00ff7f 53%, 
+        #00b7d7 57%, 
+        rgba(17, 17, 17, 0.75) 62%, 
+        rgba(17, 17, 17, 0.75) 100%
+    );
 }
 
 .carousel-arrow:hover {
-     background-color: rgba(255, 138, 21, 0.85);  
     transform: scale(1.1);
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
-    color: #fff;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.7);  
+    animation: diagonalRainbowGlow 1.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
 .carousel-arrow-prev {
@@ -1230,6 +1277,7 @@ span.initiative_namber{
 
 .initiative_inline p{
     width: 80%;
+    max-width: 720px;
 }
 
 .initiative_supplement{
@@ -1263,7 +1311,7 @@ span.initiative_namber{
     padding:10px 5px;
     color: #353535;
     font-weight: 800;
-    letter-spacing: 0,04em;
+    letter-spacing: 0.04em;
     border-radius:0 0 10px 10px;
 }
 
@@ -1303,7 +1351,7 @@ span.initiative_namber{
 
 .initiative_slide_title,.initiative_comment_title{
     color: #fff;
-    font-size: 2.2rem;
+    font-size: 2.4rem;
     text-align: center;
     margin: 90px 0 40px;
     letter-spacing: 0.15rem;
@@ -1407,6 +1455,182 @@ span.initiative_namber{
     padding: 60px 0;
 }
 
+/* ============================================================
+   移住した人の声：チャット風UI
+   （絶対配置の吹き出しコラージュから、LINEのトークのような
+   縦積みの会話形式に変更）
+============================================================ */
+.voice_chat_contents{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    width: 100%;
+    gap: 30px;
+}
+
+.voice_chat {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    background-color: #ffffff;
+    border-radius: 28px;
+    padding: 40px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.voice_chat_header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding-bottom: 22px;
+    margin-bottom: 26px;
+    border-bottom: 2px dashed rgba(0, 0, 0, 0.1);
+}
+
+.voice_chat_header_q {
+    font-size: 1.8rem;
+    color: #ff8a15;
+}
+
+.voice_chat_header_text {
+    font-family: "Noto Sans JP", sans-serif;
+    font-weight: 700;
+    font-size: 1.45rem;
+    color: #222;
+}
+
+.voice_chat_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.voice_msg {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.voice_msg--in {
+    justify-content: flex-start;
+}
+
+.voice_msg--out {
+    justify-content: flex-end;
+}
+
+.voice_avatar {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #eee;
+    background-size: cover;
+    background-position: top center;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.voice_chat_list .voice_bubble {
+    width: auto;
+    max-width: 68%;
+    margin: 0;
+    padding: 14px 20px;
+    border-radius: 22px;
+    font-size: 0.92rem;
+    line-height: 1.75;
+    letter-spacing: 0.02em;
+}
+
+/* 受信側（左）：淡いグレーの吹き出し */
+.voice_msg--in .voice_bubble {
+    background-color: #f1f1f3;
+    color: #222;
+    border-bottom-left-radius: 6px;
+}
+
+/* 送信側（右）：受信側より少し濃いグレーの吹き出し
+   （色は「大きめの声」だけに使うため、通常の吹き出しはグレーで統一） */
+.voice_msg--out .voice_bubble {
+    background-color: #e3e3e6;
+    color: #222;
+    border-bottom-right-radius: 6px;
+}
+
+/* 特に強調したい声（元デザインの大きな吹き出しを踏襲） */
+.voice_msg--in .voice_bubble--featured,
+.voice_msg--out .voice_bubble--featured {
+    max-width: 82%;
+    padding: 22px 26px;
+    font-size: 1rem;
+    background-color: #67C15B;
+    color: #fff;
+}
+
+.voice_msg--in .voice_bubble--featured-alt,
+.voice_msg--out .voice_bubble--featured-alt {
+    max-width: 82%;
+    padding: 22px 26px;
+    font-size: 1rem;
+    background-color: #B18FDC;
+    color: #fff;
+}
+
+@media screen and (max-width: 767px) {
+    .voice_chat_contents {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .voice_chat {
+        width: 100%;
+        padding: 26px 20px;
+        border-radius: 22px;
+        margin-bottom: 30px;
+    }
+
+    .voice_chat_header {
+        padding-bottom: 16px;
+        margin-bottom: 20px;
+    }
+
+    .voice_chat_header_q {
+        font-size: 1.4rem;
+    }
+
+    .voice_chat_header_text {
+        font-size: clamp(14px, 4vw, 16px);
+    }
+
+    .voice_chat_list {
+        gap: 14px;
+    }
+
+    .voice_avatar {
+        width: 34px;
+        height: 34px;
+    }
+
+    .voice_chat_list .voice_bubble {
+        max-width: 78%;
+        padding: 11px 16px;
+        font-size: 0.82rem;
+        line-height: 1.65;
+    }
+
+    .voice_msg--in .voice_bubble--featured,
+    .voice_msg--out .voice_bubble--featured,
+    .voice_msg--in .voice_bubble--featured-alt,
+    .voice_msg--out .voice_bubble--featured-alt {
+        max-width: 88%;
+        padding: 16px 18px;
+        font-size: 0.85rem;
+    }
+}
+
 .initiative_li_02 span{
     border-bottom: 1.5px solid #fff;
 }
@@ -1464,6 +1688,8 @@ span.initiative_namber{
 
 /* カードは折り返し禁止・幅固定 */
 .initiative_li_03 {
+    display: flex;          /* カード自体もフレックスコンテナにする */
+    flex-direction: column; /* 中の要素（タイトルや画像、テキスト）を縦並びにする */
     flex: 0 0 auto;
     width: 300px; 
     color: #fff;
@@ -1472,6 +1698,12 @@ span.initiative_namber{
     line-height: 1.7;
     letter-spacing: 0.08rem;
     border-radius: 15px;
+    transition: all .6s;
+}
+
+.initiative_li_03:hover{
+    transform: scale(1.05);
+
 }
 
 /* 半分だけ左にスライドさせてループさせる */
@@ -1484,6 +1716,10 @@ span.initiative_namber{
     }
 }
 
+.initiative_ul_03 a {
+    display: flex; /* flexコンテナ化して、子要素のliを高さいっぱいに引き伸ばす */
+    text-decoration: none;
+}
 .company_title {
     margin: 0px auto 20px;
 }
@@ -1497,6 +1733,14 @@ span.initiative_namber{
 
 .initiative_li_tagline img{
     border-radius: 10px;
+}
+
+.initiative_ul_03.marquee_track ::before,
+.initiative_ul_03.marquee_track ::after,
+.initiative_ul_03.marquee_track li::before,
+.initiative_ul_03.marquee_track li::after {
+    content: none !important;
+    display: none !important;
 }
 
 /*-------- 企業支援策 -------*/
@@ -1562,6 +1806,7 @@ span.initiative_namber{
     border-radius: 30px 0 0 30px;
     width: 100%;
     height: 600px;
+    object-fit: cover;
 }
 
 .supplement_textbox{
@@ -1648,11 +1893,355 @@ span.initiative_namber{
     animation: rainbowGlow 0.8s ease-in-out forwards; 
 }
 
-.supplement_link:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
-    /* ホバー時にアニメーションを1回だけ高速再生して「きらっと」させる */
-    animation: rainbowGlow 0.8s ease-in-out forwards; 
+
+/* ---------- Footer ---------- */
+.site_footer {
+    position: relative;
+    background-color: #111111;
+    color: #ffffff;
+    padding: 60px 24px 0;
+    overflow: hidden;
+    text-align: left;
+}
+ 
+/* 虹色の境界線（サイト内のグラデーション演出を踏襲） */
+.footer_top_line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background-image: linear-gradient(
+        to right,
+        #0735FD 0%,
+        #C844FF 25%,
+        #FF56A4 50%,
+        #ff8a15 75%,
+        #00ff7f 100%
+    );
+}
+ 
+.footer_inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 50px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+ 
+/* ---- ブランドエリア ---- */
+.footer_brand {
+    flex: 1 1 240px;
+}
+ 
+.footer_logo {
+    display: inline-block;
+}
+ 
+.footer_logo img {
+    opacity: 0.95;
+}
+ 
+.footer_tagline {
+    margin-top: 16px;
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.75);
+}
+ 
+/* ---- 見出し共通 ---- */
+.footer_col_title {
+    display: block;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 18px;
+}
+ 
+/* ---- サイトマップ ---- */
+.footer_nav {
+    flex: 1 1 200px;
+}
+ 
+.footer_nav_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+ 
+.footer_nav_list a {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    text-decoration: none;
+    color: #ffffff;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+ 
+.footer_nav_list a:hover {
+    opacity: 0.7;
+    transform: translateX(4px);
+}
+ 
+.footer_link_en {
+    font-size: 1.05rem;
+    color: #ffffff;
+}
+ 
+.footer_link_jp {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.55);
+    font-family: "Noto Sans JP", sans-serif;
+}
+ 
+/* ---- 組織情報 ---- */
+.footer_org {
+    flex: 1 1 240px;
+}
+ 
+.footer_org_name {
+    font-size: 1rem;
+    margin-bottom: 6px;
+}
+ 
+.footer_org_sub {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 20px;
+}
+ 
+/* サイト内の .data_more_btn を踏襲した虹色ピルボタン（フッター用に小型化） */
+.footer_more_btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border: 2px solid #fff;
+    border-radius: 100px;
+    padding: 8px 20px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+ 
+.footer_more_btn::after {
+    content: "→";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background-color: #ffffff;
+    color: #111111;
+    border-radius: 50%;
+    font-size: 0.7em;
+    font-weight: 900;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+ 
+.footer_more_btn_t {
+    color: #fff;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    font-family: "Alegreya Sans", sans-serif;
+}
+ 
+.footer_more_btn:hover {
+    background-image: linear-gradient(to right, rgba(17,17,17,0.75) 0%, rgba(17,17,17,0.75) 30%, #ff1493 45%, #ff8a15 50%, #00ff7f 55%, rgba(17,17,17,0.75) 70%, rgba(17,17,17,0.75) 100%);
+    background-size: 250% 100%;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+    animation: rainbowGlow 0.8s ease-in-out forwards;
+}
+ 
+/* ---- SNS ---- */
+.footer_sns {
+    flex: 1 1 160px;
+}
+ 
+.footer_sns_links {
+    display: flex;
+    gap: 12px;
+}
+ 
+.footer_sns_link {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+ 
+.footer_sns_link_t {
+    color: #fff;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+}
+ 
+.footer_sns_link:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    background-image: linear-gradient(135deg, #ff1493 0%, #ff8a15 50%, #00ff7f 100%);
+}
+ 
+/* ---- 最下部 ---- */
+.footer_bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    text-align: left;
+}
+ 
+.footer_amakusa_logo {
+    height: 70px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+}
+ 
+.footer_copyright {
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.5);
+    font-style: normal;
+}
+ 
+/* ---- レスポンシブ（SP版） ---- */
+@media screen and (max-width: 767px) {
+    .site_footer {
+        padding: 48px 20px 0;
+        text-align: center;
+    }
+
+    .footer_top_line {
+        height: 4px;
+    }
+
+    /* 1カラムで縦積みにし、他セクション（.fixed_area等）と
+       同様に中央ぞろえへ切り替える */
+    .footer_inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 36px;
+        padding-bottom: 32px;
+    }
+
+    .footer_brand,
+    .footer_nav,
+    .footer_org,
+    .footer_sns {
+        flex: none;
+        width: 100%;
+    }
+
+    .footer_logo img {
+        height: 40px;
+    }
+
+    .footer_tagline {
+        margin-top: 14px;
+        font-size: clamp(13px, 3.4vw, 15px);
+    }
+
+    .footer_col_title {
+        font-size: 0.8rem;
+        margin-bottom: 16px;
+    }
+
+    /* ナビリストは中央寄せの上、各リンク内はEN/JPを
+       横並びのまま中央に揃える */
+    .footer_nav_list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 150px));
+        justify-content: center;
+        column-gap: 32px;
+        row-gap: 20px;
+    }
+
+    .footer_nav_list a {
+        justify-content: flex-start;
+        text-align: left;
+    }
+
+    .footer_link_en {
+        font-size: clamp(15px, 4vw, 17px);
+    }
+
+    .footer_link_jp {
+        font-size: clamp(11px, 3vw, 12px);
+    }
+
+    .footer_org_name {
+        font-size: clamp(15px, 4vw, 16px);
+    }
+
+    .footer_org_sub {
+        font-size: clamp(11px, 3vw, 12px);
+        margin-bottom: 18px;
+    }
+
+    .footer_more_btn {
+        margin: 0 auto;
+    }
+
+    .footer_sns_links {
+        justify-content: center;
+    }
+
+    /* ロゴ→コピーライトの順で縦積み・中央ぞろえ */
+    .footer_bottom {
+        flex-direction: column-reverse;
+        gap: 18px;
+        padding: 28px 0 34px;
+        text-align: center;
+    }
+
+    .footer_amakusa_logo {
+        height: 56px;
+    }
+}
+
+/* ---- 小型スマホ向け微調整 ---- */
+@media screen and (max-width: 480px) {
+    .site_footer {
+        padding: 40px 16px 0;
+    }
+
+    .footer_inner {
+        gap: 28px;
+        padding-bottom: 26px;
+    }
+
+    .footer_nav_list a {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .footer_more_btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .footer_sns_link {
+        width: 40px;
+        height: 40px;
+    }
+
+    .footer_amakusa_logo {
+        height: 48px;
+    }
 }
 
 
@@ -1669,6 +2258,7 @@ body.no-scroll {
 @media screen and (max-width: 950px) {
     .fixed_area {
         flex-direction: column;
+        flex-wrap: wrap; /* スマホ・タブレットでは折り返しを許可 */
         text-align: center;
         gap: 15px;
     }
@@ -1677,25 +2267,14 @@ body.no-scroll {
         width: 80%;
         max-width: 300px;
     }
-    .fixed_title_word{
-        margin-bottom: 10px;
-    }
-    .fixed_body-text{
-        margin-top: 25px;
-        text-align: left;
-    }
 
+    /* 950px以下の時のデコレーション位置調整 */
     .fixed_title03::before {
-        content: "";
-        display: block;
-        background-image: url(../img/fixed_deco.png);
-        background-size: contain;
-        background-repeat: no-repeat;
         width: 120px;
         height: 95px;
-        position: absolute;
-        top: 40%;
-        left: 24%;
+        top: -60px;
+        left: 50%;
+        transform: translateX(-50%); /* 中央寄せ */
     }
 
     .next_container{
@@ -1718,6 +2297,128 @@ body.no-scroll {
 
     .data_contents_flex:nth-of-type(2) .data_sec {
         width: 100%;    
+    }
+
+    /* ========================================
+       ここから .initiative_inline 配下
+       タブレット幅(951〜950px)対応
+       (これまでデスクトップ用スタイルが
+        480px以下まで維持されていた分を補完)
+    ======================================== */
+
+    .initiative_sec_inline {
+        width: 88%;
+        padding: 110px 0;
+    }
+
+    .initiative_heading_jp {
+        font-size: clamp(34px, 6vw, 56px);
+        padding: 0 16px;
+    }
+
+    .initiative_heading_en {
+        font-size: clamp(16px, 2.5vw, 22px);
+    }
+
+    span.initiative_namber {
+        font-size: clamp(90px, 16vw, 160px);
+        top: 30px;
+    }
+
+    /* 80%固定だとタブレットでは余白が大きすぎるため全幅に */
+    .initiative_inline p {
+        width: 100%;
+        max-width: 640px;
+    }
+
+    .initiative_text {
+        margin: 25px 0 12px;
+        font-size: clamp(16px, 2.2vw, 19px);
+        line-height: 1.9;
+    }
+
+    .initiative_supplement {
+        font-size: 12px;
+        line-height: 1.7;
+    }
+
+    .initiative_sentence {
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+    /* 01・04: 画像＋キャプションのリスト → 2列に */
+    .initiative_ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .initiative_li {
+        width: calc(50% - 15px);
+    }
+
+    /* 02: 支援・奨励金カード */
+    .initiative_ul_02 {
+        gap: 16px;
+    }
+
+    /* 03: 進出企業マーキーカード */
+    .initiative_li_03 {
+        width: 280px;
+    }
+
+    /* 03: 拠点開設支援策 → 2列に */
+    .support_ul {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .support_list {
+        width: calc(50% - 8px);
+    }
+
+    /* 見出し「支援・奨励金一覧」「進出企業一覧」「移住した人の声」 */
+    .initiative_slide_title,
+    .initiative_comment_title {
+        font-size: clamp(20px, 3.5vw, 28px);
+        margin: 70px 0 30px;
+    }
+
+    .initiative_comment {
+        padding: 50px 0;
+    }
+
+    /* 04: 官民合同会社セクション → 横並びをやめて縦積みに */
+    .supplement_sec {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .supplement_img,
+    .supplement_textbox {
+        width: 100%;
+    }
+
+    .supplement_img img {
+        height: auto;
+        aspect-ratio: 16 / 9;
+        border-radius: 30px 30px 0 0;
+    }
+
+    .supplement_textbox {
+        padding: 40px 30px;
+    }
+
+    .supplement_title {
+        font-size: 1.7rem;
+        margin-bottom: 25px;
+    }
+
+    .supplement_text {
+        font-size: 15px;
+        margin-bottom: 35px;
     }
 
 }
@@ -1920,7 +2621,6 @@ body.no-scroll {
     .about_title_jp-word { margin-bottom: 6px; }
 
     
-    .sticky-wrapper,
     .fixed_wrapper {
         position: relative;
         width: 100%;
@@ -2238,13 +2938,12 @@ body.no-scroll {
     /* ---- 01・04: 画像＋キャプションのリスト ---- */
     .initiative_ul {
         flex-direction: column;
-        gap: 30px;
-        margin-top: 50px;
+        gap: 50px;
+        margin-top:5px;
     }
 
     .initiative_li {
         width: 100%;
-        max-width: 320px;
         margin: 0 auto;
     }
 
@@ -2308,15 +3007,42 @@ body.no-scroll {
         margin-bottom: 15px;
     }
 
+    /* 04: 官民合同会社セクション（スマホ向け微調整） */
+    .supplement_textbox {
+        padding: 30px 20px;
+    }
+
+    .supplement_title {
+        font-size: 1.4rem;
+        margin-bottom: 18px;
+    }
+
+    .supplement_text {
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
 }
 
 
-/* ---------- Footer ---------- */
-footer {
-    padding: 40px 24px;
-    text-align: center;
-    background: #fff;
+@media screen and (min-width: 1101px) {
+    .initiative_comment {
+        width: 80%;
+        margin: 0 auto;
+        padding: 80px 0;
+    }
+
 }
+
+
+/* --- スマホ・タブレット版（1100px以下）のレイアウト --- */
+@media screen and (max-width: 1100px) {
+    .initiative_comment {
+        padding: 40px 0;
+    }
+
+}
+
 
 /* ==============================
    iOS Safari 対応:
