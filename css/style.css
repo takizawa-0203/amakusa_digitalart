@@ -2981,6 +2981,10 @@ body.no-scroll {
         line-height: 1.75;
     }
 
+    .voice_chat_contents {
+    display:block;
+}
+
     /* ---- 03: 進出企業マーキー ---- */
     .initiative_li_03 {
         width: 260px;
