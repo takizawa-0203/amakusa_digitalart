@@ -14,14 +14,20 @@ window.addEventListener('load', function () {
     setTimeout(setViewportHeight, 300);
 });
 
-// ローディング
-$(window).on('load', function () {
-    setTimeout(function () {
-        $('body').addClass('appear');
+// ===== ローディング（初回のみ表示） =====
+$(function () {
+    if (!sessionStorage.getItem('visited')) {
         setTimeout(function () {
-            $("#splash").hide();
-        }, 1000);
-    }, 1000);
+            $('body').addClass('appear');
+            setTimeout(function () {
+                $("#splash").hide();
+            }, 1000);
+        }, 1000);        
+        sessionStorage.setItem('visited', 'true');
+    } else {
+        $("#splash").hide();
+        $('body').addClass('appear');
+    }
 });
 
 // ハンバーガーメニュー
