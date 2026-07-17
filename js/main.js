@@ -285,8 +285,8 @@ window.addEventListener('touchend', function (e) {
     const targets = [
         '.top_logo',
         '.about_title',
-        '.fixed_title',
-        '.fixed_img',
+        '.fixed_title_word',
+        '.fixed_img img',
         '.fixed_body-text',
         '.movie_title_en',
         '.movie_title_jp',
@@ -319,7 +319,7 @@ window.addEventListener('touchend', function (e) {
         const parent = el.parentElement;
         const count = delayCounters.get(parent) || 0;
         if (count < 6) {
-            el.style.transitionDelay = (count * 0.32) + 's';
+            el.style.transitionDelay = (count * 0.22) + 's';
         }
         delayCounters.set(parent, count + 1);
     });
