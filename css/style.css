@@ -3062,3 +3062,30 @@ body.no-scroll {
         background-attachment: scroll;
     }
 }
+
+
+/* ==============================
+   スクロールで要素がふわっと出現する演出
+   (main.js の IntersectionObserver と対になっています)
+============================== */
+.js-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+
+.js-reveal.is-inview {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 動きを抑えたい人向けの配慮（OS側の「視差効果を減らす」設定） */
+@media (prefers-reduced-motion: reduce) {
+    .js-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
