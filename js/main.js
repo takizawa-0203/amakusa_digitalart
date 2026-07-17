@@ -262,6 +262,77 @@ window.addEventListener('touchend', function (e) {
 
 
 
+// ===== スクロールで要素がふわっと出現する演出 =====
+(function () {
+    // フェードインさせたい要素をまとめて指定
+    // (id指定ではなくクラスなので、増減してもここに追加するだけでOK)
+    const targets = [
+        '.about_title',
+        '.fixed_title',
+        '.fixed_img',
+        '.fixed_body-text',
+        '.movie_title_en',
+        '.movie_title_jp',
+        '.movie_area1',
+        '.movie_area2',
+        '.data_title_en',
+        '.data_title_jp',
+        '.data_sec',
+        '.initiative_title',
+        '.initiative_heading',
+        '.initiative_text',
+        '.initiative_supplement',
+        '.initiative_ul > li',
+        '.initiative_ul_02 > li',
+        '.support_ul > li',
+        '.supplement_sec',
+        '.voice_chat',
+        '.footer_brand',
+        '.footer_nav',
+        '.footer_cta_area'
+    ];
+
+    const elements = document.querySelectorAll(targets.join(','));
+
+    if (!elements.length) return;
+
+    // 同じ親要素内で並ぶ要素は、少しずつ時間差をつけて出現させる（最大6件まで）
+    const delayCounters = new WeakMap();
+
+    elements.forEach(function (el) {
+        el.classList.add('js-reveal');
+
+        const parent = el.parentElement;
+        const count = delayCounters.get(parent) || 0;
+        if (count < 6) {
+            el.style.transitionDelay = (count * 0.12) + 's';
+        }
+        delayCounters.set(parent, count + 1);
+    });
+
+    // 「視差効果を減らす」設定がオンの場合はアニメーションなしで即表示
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        elements.forEach(function (el) { el.classList.add('is-inview'); });
+        return;
+    }
+
+    const revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-inview');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -8% 0px'
+    });
+
+    elements.forEach(function (el) {
+        revealObserver.observe(el);
+    });
+})();
+
 // ---- カルーセル機能 ----
 let carouselIndex = 1; // 中央に表示するインデックス
 
