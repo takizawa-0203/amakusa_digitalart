@@ -178,6 +178,9 @@ body::before {
     left: 0;
     z-index: -1;
     width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
     height: 100vh;
     height: 100svh;
     height: 100dvh;
@@ -2442,6 +2445,27 @@ body.no-scroll {
         font-size: clamp(12px, 3.5vw, 16px);
     }
 
+    .keyv {
+    content: "";
+    display: block;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+    height: 100vh;
+    height: 100svh;
+    height: 100dvh;
+    height: var(--full-vh);
+    background-image: url(../img/KV_people_sp.png);
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
+
     .topview{
         width: 100%;
         height: 100vh;
@@ -2476,21 +2500,11 @@ body.no-scroll {
     }
 
     /* ---------- KV ---------- */
-
-    .keyv {
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: -1;
-    width: auto;
-    height: min(95vh, 1700px);
-}
-
-    .keyv img {
-        width: auto;
-        height: 100%;
-    }
+    /* 旧: ここに .keyv / .keyv img を絶対配置(width:auto)で
+       再定義するルールがあり、中身が空の div が幅0に潰れて
+       キービジュアルが非表示になっていたため削除。
+       表示に必要な設定は上の 480px ブロック内の .keyv
+       (width:100%, background-image指定) に統一。 */
 
     .maincopy {
         padding-left: 24px;
@@ -2710,16 +2724,11 @@ body.no-scroll {
 
 
     .fixed_title03::before {
-    content: "";
-    display: block;
-    background-image: url(../img/fixed_deco.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 80px;
-    position: relative;
-    top: -5px;
-    left: 0px;
+    width: 110px;
+    height: 85px;
+    top: -90px;
+    left: 7%;
+    transform: translateX(-50%); /* 中央寄せ */
 }
     /* ---------- NEXT ---------- */
     .next_container { bottom: 100px; }
@@ -3066,6 +3075,10 @@ body.no-scroll {
 ============================== */
 @supports (-webkit-touch-callout: none) {
     body::before {
+        background-attachment: scroll;
+    }
+
+    .keyv {
         background-attachment: scroll;
     }
 }
