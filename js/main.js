@@ -14,6 +14,22 @@ window.addEventListener('load', function () {
     setTimeout(setViewportHeight, 300);
 });
 
+// ===== ローディング文字を1文字ずつに分割（ウェーブ演出用） =====
+$(function () {
+    const $text = $('.loading-text');
+    if (!$text.length) return;
+
+    const label = $text.text();
+    $text.attr('aria-label', label).empty();
+
+    label.split('').forEach(function (char, i) {
+        $('<span aria-hidden="true"></span>')
+            .text(char === ' ' ? '\u00A0' : char)
+            .css('animation-delay', (i * 0.08) + 's')
+            .appendTo($text);
+    });
+});
+
 // ===== ローディング（初回のみ表示） =====
 $(function () {
     if (!sessionStorage.getItem('visited')) {
@@ -267,6 +283,7 @@ window.addEventListener('touchend', function (e) {
     // フェードインさせたい要素をまとめて指定
     // (id指定ではなくクラスなので、増減してもここに追加するだけでOK)
     const targets = [
+        '.top_logo',
         '.about_title',
         '.fixed_title',
         '.fixed_img',
@@ -287,9 +304,6 @@ window.addEventListener('touchend', function (e) {
         '.support_ul > li',
         '.supplement_sec',
         '.voice_chat',
-        '.footer_brand',
-        '.footer_nav',
-        '.footer_cta_area'
     ];
 
     const elements = document.querySelectorAll(targets.join(','));
@@ -305,7 +319,7 @@ window.addEventListener('touchend', function (e) {
         const parent = el.parentElement;
         const count = delayCounters.get(parent) || 0;
         if (count < 6) {
-            el.style.transitionDelay = (count * 0.12) + 's';
+            el.style.transitionDelay = (count * 0.32) + 's';
         }
         delayCounters.set(parent, count + 1);
     });
