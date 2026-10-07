@@ -37,8 +37,8 @@ $(function () {
             $('body').addClass('appear');
             setTimeout(function () {
                 $("#splash").hide();
-            }, 5000);
-        }, 5000);        
+            }, 1200); // 円が広がる演出(1.1秒)が終わったら非表示
+        }, 2500);     // ローディング表示時間（ms）
         sessionStorage.setItem('visited', 'true');
     } else {
         $("#splash").hide();
@@ -63,9 +63,10 @@ $(function () {
 // タイトル押し上げ（windowのscrollを監視）
 window.addEventListener('scroll', function () {
     const titleEl = document.querySelector('.about_title');
-    const fixed05El = document.querySelector('.fixed05');
-    if (titleEl && fixed05El) {
-        const fixed05Top = fixed05El.getBoundingClientRect().top;
+    const fixedEls = document.querySelectorAll('.fixed');
+    const lastFixedEl = fixedEls[fixedEls.length - 1]; // 最後のページ(現在は.fixed06)
+    if (titleEl && lastFixedEl) {
+        const fixed05Top = lastFixedEl.getBoundingClientRect().top;
         const titleBottom = 120;
         if (fixed05Top <= titleBottom) {
             titleEl.style.transform = `translateY(${fixed05Top - titleBottom}px)`;
@@ -133,19 +134,19 @@ function getScrollPositions() {
         ? fixedItems[0].offsetHeight
         : window.innerHeight;
 
+    const count = fixedItems.length || 6; // ページ数（現在6枚）
+
     const movieTop = movie
         ? movie.getBoundingClientRect().top + currentScroll
-        : wrapperTop + fixedHeight * 5;
+        : wrapperTop + fixedHeight * count;
 
-    return [
-        0,                         // 0: .topview
-        wrapperTop,                // 1: .fixed01
-        wrapperTop + fixedHeight,  // 2: .fixed02
-        wrapperTop + fixedHeight * 2,
-        wrapperTop + fixedHeight * 3,
-        wrapperTop + fixedHeight * 4,
-        movieTop                   // 6: .movie
-    ];
+    // [0]=topview, [1〜count]=fixed01〜fixed0N, [count+1]=movie
+    const positions = [0];
+    for (let i = 0; i < count; i++) {
+        positions.push(wrapperTop + fixedHeight * i);
+    }
+    positions.push(movieTop);
+    return positions;
 }
 
 
@@ -161,9 +162,10 @@ window.addEventListener('wheel', function (e) {
     const currentScroll = getScrollTop();
     const direction = e.deltaY > 0 ? 1 : -1;
 
+    const count = positions.length - 2; // Aboutのページ数（6）
     const aboutStart = positions[1];
-    const aboutEnd = positions[5];
-    const movieTop = positions[6];
+    const aboutEnd = positions[count];
+    const movieTop = positions[count + 1];
 
     // topviewから下にスクロールしたら fixed01 へ
     if (direction === 1 && currentScroll < aboutStart - 5) {
@@ -172,7 +174,7 @@ window.addEventListener('wheel', function (e) {
         return;
     }
 
-    // movieの先頭付近から上に戻る時だけ fixed05 へ戻す
+    // movieの先頭付近から上に戻る時だけ 最後のfixed(fixed06) へ戻す
     if (
         direction === -1 &&
         currentScroll >= movieTop - 5 &&
@@ -192,7 +194,7 @@ window.addEventListener('wheel', function (e) {
         let currentIndex = 1;
         let minDiff = Infinity;
 
-        for (let i = 1; i <= 6; i++) {
+        for (let i = 1; i <= count + 1; i++) {
             const diff = Math.abs(currentScroll - positions[i]);
             if (diff < minDiff) {
                 minDiff = diff;
@@ -202,7 +204,7 @@ window.addEventListener('wheel', function (e) {
 
         const nextIndex = currentIndex + direction;
 
-        if (nextIndex >= 1 && nextIndex <= 6) {
+        if (nextIndex >= 1 && nextIndex <= count + 1) {
             smoothScrollTo(positions[nextIndex], 800);
         } else if (nextIndex < 1) {
             smoothScrollTo(0, 800);
@@ -231,9 +233,10 @@ window.addEventListener('touchend', function (e) {
     const currentScroll = getScrollTop();
     const direction = diff > 0 ? 1 : -1;
 
+    const count = positions.length - 2; // Aboutのページ数（6）
     const aboutStart = positions[1];
-    const aboutEnd = positions[5];
-    const movieTop = positions[6];
+    const aboutEnd = positions[count];
+    const movieTop = positions[count + 1];
 
     // topviewから下へスワイプしたら fixed01 へ
     if (direction === 1 && currentScroll < aboutStart - 5) {
@@ -241,7 +244,7 @@ window.addEventListener('touchend', function (e) {
         return;
     }
 
-    // movie先頭付近から上へ戻る時だけ fixed05 へ
+    // movie先頭付近から上へ戻る時だけ 最後のfixed(fixed06) へ
     if (
         direction === -1 &&
         currentScroll >= movieTop - 5 &&
@@ -258,7 +261,7 @@ window.addEventListener('touchend', function (e) {
         let currentIndex = 1;
         let minDiff = Infinity;
 
-        for (let i = 1; i <= 6; i++) {
+        for (let i = 1; i <= count + 1; i++) {
             const diffAbs = Math.abs(currentScroll - positions[i]);
             if (diffAbs < minDiff) {
                 minDiff = diffAbs;
@@ -268,7 +271,7 @@ window.addEventListener('touchend', function (e) {
 
         const nextIndex = currentIndex + direction;
 
-        if (nextIndex >= 1 && nextIndex <= 6) {
+        if (nextIndex >= 1 && nextIndex <= count + 1) {
             smoothScrollTo(positions[nextIndex], 600);
         } else if (nextIndex < 1) {
             smoothScrollTo(0, 600);
@@ -318,8 +321,16 @@ window.addEventListener('touchend', function (e) {
 
         const parent = el.parentElement;
         const count = delayCounters.get(parent) || 0;
+
+        // 支援・奨励金一覧(6項目)は、遅延を短く・動きも速くする
+        const isMoneyList = el.matches('.initiative_ul_02 > li');
+        const step = isMoneyList ? 0.12 : 0.22;   // 1項目ごとの時間差(秒)
+        if (isMoneyList) {
+            el.style.transitionDuration = '0.55s'; // 出現にかかる時間
+        }
+
         if (count < 6) {
-            el.style.transitionDelay = (count * 0.22) + 's';
+            el.style.transitionDelay = (count * step) + 's';
         }
         delayCounters.set(parent, count + 1);
     });
@@ -342,9 +353,51 @@ window.addEventListener('touchend', function (e) {
         rootMargin: '0px 0px -8% 0px'
     });
 
+    // 支援・奨励金一覧(.initiative_ul_02)は個別に監視せず、
+    // 1番目・2番目のどちらかが見えたら、6項目を順番に浮かび上がらせる
+    const moneyItems = document.querySelectorAll('.initiative_ul_02 > li');
+    const moneyTriggers = Array.prototype.slice.call(moneyItems, 0, 2);
+
     elements.forEach(function (el) {
+        if (el.matches('.initiative_ul_02 > li')) return; // 個別監視から除外
+        if (el.matches('.fixed_title_word')) return;      // タイトルは下の処理で出現させる
         revealObserver.observe(el);
     });
+
+    // Aboutのタイトル(.fixed_title_word)は、ページがほぼ定位置に収まってから浮かび上がらせる
+    // (ページが下からスライドして来る間に1行目だけ先に出現し終わってしまうのを防ぐ)
+    const titleWords = document.querySelectorAll('.fixed .fixed_title_word');
+
+    function revealSettledTitles() {
+        document.querySelectorAll('.fixed').forEach(function (section) {
+            const words = section.querySelectorAll('.fixed_title_word:not(.is-inview)');
+            if (!words.length) return;
+            const rect = section.getBoundingClientRect();
+            // セクションの上端が画面上端から10%以内に来たら「収まった」とみなす
+            if (rect.top <= window.innerHeight * 0.1 && rect.bottom > window.innerHeight * 0.5) {
+                words.forEach(function (w) { w.classList.add('is-inview'); });
+            }
+        });
+    }
+
+    if (titleWords.length) {
+        window.addEventListener('scroll', revealSettledTitles, { passive: true });
+        window.addEventListener('resize', revealSettledTitles);
+        revealSettledTitles();
+    }
+
+    if (moneyItems.length) {
+        const moneyObserver = new IntersectionObserver(function (entries) {
+            const seen = entries.some(function (entry) { return entry.isIntersecting; });
+            if (!seen) return;
+            moneyItems.forEach(function (li) { li.classList.add('is-inview'); });
+            moneyObserver.disconnect();
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -8% 0px'
+        });
+        moneyTriggers.forEach(function (li) { moneyObserver.observe(li); });
+    }
 })();
 
 // ---- カルーセル機能 ----
