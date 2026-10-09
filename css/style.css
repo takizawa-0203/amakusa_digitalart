@@ -1474,9 +1474,9 @@ span.initiative_namber{
 }
 .initiative_li_tagline{
     color: #fff;
-    font-size: 14px;
+    font-size: 0.9rem;
     letter-spacing: 0.08rem;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.8;
 }
 
@@ -1488,11 +1488,9 @@ span.initiative_namber{
     padding: 60px 0;
 }
 
-/* ============================================================
+/* =========================================
    移住した人の声：チャット風UI
-   （絶対配置の吹き出しコラージュから、LINEのトークのような
-   縦積みの会話形式に変更）
-============================================================ */
+============================================ */
 .voice_chat_contents{
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1578,22 +1576,21 @@ span.initiative_namber{
     letter-spacing: 0.02em;
 }
 
-/* 受信側（左）：淡いグレーの吹き出し */
+/* 受信側（左）*/
 .voice_msg--in .voice_bubble {
     background-color: #f1f1f3;
     color: #222;
     border-bottom-left-radius: 6px;
 }
 
-/* 送信側（右）：受信側より少し濃いグレーの吹き出し
-   （色は「大きめの声」だけに使うため、通常の吹き出しはグレーで統一） */
+/* 送信側（右） */
 .voice_msg--out .voice_bubble {
     background-color: #e3e3e6;
     color: #222;
     border-bottom-right-radius: 6px;
 }
 
-/* 特に強調したい声（元デザインの大きな吹き出しを踏襲） */
+/* 強調 */
 .voice_msg--in .voice_bubble--featured,
 .voice_msg--out .voice_bubble--featured {
     max-width: 82%;
@@ -1681,7 +1678,7 @@ span.initiative_namber{
     pointer-events: none;  
 }
 
-/* 各カード個別の数字設定 (content属性を使用) */
+/* 各カード個別の数字設定*/
 .initiative_li_02.initiative_li_inline01::before { 
     content: "1"; 
     right: 0px;
@@ -1700,8 +1697,6 @@ span.initiative_namber{
     margin-top: 15px;
 }
 
-
-/* 画面幅いっぱいにはみ出させる*/
 .marquee_wrap {
     width: 100vw;
     position: relative;
@@ -1710,7 +1705,6 @@ span.initiative_namber{
     overflow: hidden;
 }
 
-/* 中身の合計幅ぶん横に伸びるコンテナ */
 .initiative_ul_03.marquee_track {
     display: flex;
     width: max-content;
@@ -1720,8 +1714,6 @@ span.initiative_namber{
     animation: marquee-scroll 35s linear infinite;
 }
 
-
-/* カードは折り返し禁止・幅固定 */
 .initiative_li_03 {
     display: flex;         
     flex-direction: column;
@@ -1741,7 +1733,6 @@ span.initiative_namber{
 
 }
 
-/* 半分だけ左にスライドさせてループさせる */
 @keyframes marquee-scroll {
     from {
         transform: translateX(0);
@@ -1752,7 +1743,7 @@ span.initiative_namber{
 }
 
 .initiative_ul_03 a {
-    display: flex; /* flexコンテナ化して、子要素のliを高さいっぱいに引き伸ばす */
+    display: flex; 
     text-decoration: none;
 }
 .company_title {
@@ -1780,31 +1771,69 @@ span.initiative_namber{
 
 /*-------- 企業支援策 -------*/
 .support_ul{
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     padding: 0;
     margin-bottom: 40px;
+    counter-reset: support;
 }
 
 .support_list{
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    isolation: isolate;
     background-color: #fff;
-    padding:30px 25px;
+    padding: 35px 25px 30px;
     list-style: none;
     width: 100%;
     border-radius: 15px;
+    counter-increment: support;
 }
 
+/* 支援・奨励金一覧(.money_title)と同じピル型タイトル（配色は反転） */
 .support_title{
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 30px;
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 0.1rem;
+    width: fit-content;
+    background-color: #2448e8;
+    color: #fff;
+    border-radius: 50px;
+    padding: 4px 13px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .support_text{
     color: #2448e8;
-    line-height: 1.5rem;
-    font-size: 1rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.08rem;
+    font-weight: 500;
+    line-height: 1.8;
 }
+
+/* 右下の薄い番号（支援・奨励金一覧と同じ演出） */
+.support_list::before{
+    content: counter(support);
+    position: absolute;
+    bottom: -25px;
+    right: -10px;
+    font-family: "Inter", sans-serif;
+    font-size: 11rem;
+    font-weight: 800;
+    line-height: 1;
+    color: rgba(36, 72, 232, 0.08);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* 「1」のみ右端に寄せる */
+.support_list:first-child::before{
+    right: 0px;
+}
+
 
 .support{
     padding: 60px 0 0;
@@ -1924,7 +1953,6 @@ span.initiative_namber{
 .supplement_link:hover {
     transform: scale(1.03);
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
-    /* ホバー時にアニメーションを1回だけ高速再生して「きらっと」させる */
     animation: rainbowGlow 0.8s ease-in-out forwards; 
 }
 
@@ -1939,7 +1967,7 @@ span.initiative_namber{
     text-align: left;
 }
  
-/* 虹色の境界線（サイト内のグラデーション演出を踏襲） */
+/* 虹色の境界線 */
 .footer_top_line {
     position: absolute;
     top: 0;
@@ -2230,10 +2258,12 @@ span.initiative_namber{
 
     .footer_link_en {
         font-size: clamp(15px, 4vw, 17px);
+        margin:auto;
     }
 
     .footer_link_jp {
         font-size: clamp(11px, 3vw, 12px);
+        margin:auto;
     }
 
     .footer_org_name {
@@ -2293,7 +2323,7 @@ span.initiative_namber{
     }
 
     .footer_amakusa_logo {
-        height: 48px;
+        height: 85px;
     }
 }
 
@@ -2309,16 +2339,47 @@ body.no-scroll {
 ============================== */
 
 @media screen and (max-width: 950px) {
+    /* タブレット：上が画像・下が文字。画面の高さに合わせて画像を縮小 */
     .fixed_area {
         flex-direction: column;
         flex-wrap: wrap; /* スマホ・タブレットでは折り返しを許可 */
         text-align: center;
-        gap: 15px;
+        gap: clamp(15px, 2.5svh, 30px);
+        padding: clamp(80px, 10svh, 110px) 0 clamp(100px, 12svh, 130px);
     }
 
     .fixed_img {
-        width: 80%;
-        max-width: 300px;
+        order: 1;
+        /* PC用の flex-basis が縦積みでは「高さ」になり、文字と重なるためリセット */
+        flex: 0 0 auto;
+        width: min(80%, 420px, 36svh);
+        max-width: none;
+    }
+
+    .fixed_text {
+        order: 2;
+        flex-grow: 0; /* 縦積みでは伸ばさない */
+        width: 100%;
+        min-width: 0;
+    }
+
+    .fixed_title {
+        font-size: clamp(1.6rem, min(4vw, 3.8svh), 3.2rem);
+    }
+
+    .fixed_body-text {
+        margin-top: clamp(15px, 3svh, 40px);
+    }
+
+    /* 背の低いタブレット表示：画像と余白をさらに圧縮 */
+    @media screen and (max-height: 700px) {
+        .fixed_area {
+            padding-top: 70px;
+            gap: 12px;
+        }
+        .fixed_img {
+            width: min(80%, 420px, 28svh);
+        }
     }
 
     /* 950px以下の時のデコレーション位置調整 */
@@ -2422,14 +2483,9 @@ body.no-scroll {
         width: 280px;
     }
 
-    /* 03: 拠点開設支援策 → 2列に */
+    /* 03: 拠点開設支援策 → 2列のまま、余白だけ調整 */
     .support_ul {
-        flex-wrap: wrap;
         gap: 15px;
-    }
-
-    .support_list {
-        width: calc(50% - 8px);
     }
 
     /* 見出し「支援・奨励金一覧」「進出企業一覧」「移住した人の声」 */
@@ -2714,52 +2770,58 @@ body.no-scroll {
         background-repeat: no-repeat;
     }
 
+    /* ===== 上：画像 / 下：文字 の縦積み（機種の高さに合わせて自動縮小） =====
+       ・画像サイズ・文字サイズ・余白を画面の高さ(svh)基準にして1画面に収める
+       ・下部は「next」ボタンぶんの余白を確保 */
     .fixed_area {
+        width: 88%;
         height: 100%;
-        padding: 110px 0px 80px;
+        padding: clamp(76px, 11svh, 100px) 0 clamp(112px, 17svh, 140px);
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 15px;
+        gap: clamp(12px, 2.8svh, 28px);
         text-align: center;
     }
 
     .fixed_img {
-        width: 70%;
-        max-width: 280px;
         order: 1;
+        flex: 0 0 auto;
+        width: min(100%, 500px, 40svh);
+        max-width: none;
     }
 
     .fixed_text {
         order: 2;
         width: 100%;
+        min-width: 0;
     }
 
     .fixed_title {
-        font-size: clamp(24px, 7vw, 50px);
+        font-size: clamp(20px, min(6.2vw, 3.8svh), 40px);
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         margin: 0 auto;
+        letter-spacing: 0.06em;
     }
 
     .fixed_title_word {
         justify-content: flex-start;
-        padding: 8px 10px;
-        margin-bottom: 10px;
+        max-width: 100%;
+        padding: 6px 10px;
+        margin-bottom: clamp(6px, 1.2svh, 10px);
         line-height: 1.25;
+        text-align: left;
     }
 
     .fixed_body-text {
-        margin: 15px 0;
-        font-size: clamp(12px, 3.5vw, 15px);
-        line-height: 1.8;
+        margin: clamp(8px, 1.8svh, 15px) 0 0;
+        font-size: clamp(12px, min(3.5vw, 2.1svh), 15px);
+        line-height: 1.7;
         text-align: left;
         display: block;
-        max-width: 330px;
-        margin-left: auto;
-        margin-right: auto;
     }
 
     .fixed_body-text span { display: inline; }
@@ -2773,6 +2835,7 @@ body.no-scroll {
     left: 7%;
     transform: translateX(-50%); /* 中央寄せ */
 }
+
     /* ---------- NEXT ---------- */
     .next_container { bottom: 100px; }
     .next_text {
@@ -2784,6 +2847,32 @@ body.no-scroll {
     @keyframes scrollUpDown {
         0% { transform: translateY(0); }
         100% { transform: translateY(7px); }
+    }
+
+        /* 背の低い端末（iPhone SE など）：さらに画像・余白を圧縮 */
+    @media screen and (max-height: 640px) {
+        .fixed_area {
+            padding-top: 70px;
+            gap: 10px;
+        }
+        .fixed_img {
+            width: min(100%, 500px, 30svh);
+        }
+        .fixed_title {
+            font-size: clamp(18px, 3.9svh, 40px);
+        }
+        .fixed_body-text {
+            font-size: clamp(11px, 2svh, 15px);
+            line-height: 1.6;
+        }
+        .fixed_title04::before {
+            width: 100px;
+            height: 75px;
+            top: -80px;
+            left: 10%;
+            transform: translateX(-50%);
+        }
+        .next_container { bottom: 150px; }
     }
 
     /* ---------- MOVIE ---------- */
@@ -3010,6 +3099,10 @@ body.no-scroll {
         margin: 0 auto;
     }
 
+    .initiative_sentence_link{
+    margin-top: 15px;
+    }
+
     /* ---- 見出し「支援・奨励金一覧」「進出企業一覧」「移住した人の声」 ---- */
     .initiative_slide_title,
     .initiative_comment_title {
@@ -3060,7 +3153,7 @@ body.no-scroll {
 
     /* ---- 03: 拠点開設支援策 ---- */
     .support_ul {
-        flex-direction: column;
+        grid-template-columns: 1fr;
         gap: 15px;
     }
 
@@ -3070,8 +3163,13 @@ body.no-scroll {
     }
 
     .support_title {
-        font-size: 1rem;
+        font-size: 0.9rem;
         margin-bottom: 15px;
+    }
+
+    .support_list::before {
+        font-size: 8rem;
+        bottom: -18px;
     }
 
     /* 04: 官民合同会社セクション（スマホ向け微調整） */
@@ -3089,6 +3187,12 @@ body.no-scroll {
         margin-bottom: 25px;
     }
 
+}
+@media screen and (max-height: 640px) {
+    .supplement_link{
+        margin:10px 0;
+        padding: 10px 20px 10px 25px;
+    }
 }
 
 
@@ -3131,8 +3235,7 @@ body.no-scroll {
 
 
 /* ==============================
-   スクロールで要素がふわっと出現する演出
-   (main.js の IntersectionObserver と対になっています)
+   スクロールで要素がふわっと出現する
 ============================== */
 .js-reveal {
     opacity: 0;
@@ -3147,7 +3250,7 @@ body.no-scroll {
     transform: translateY(0);
 }
 
-/* 動きを抑えたい人向けの配慮（OS側の「視差効果を減らす」設定） */
+/* 動きを抑えたい */
 @media (prefers-reduced-motion: reduce) {
     .js-reveal {
         opacity: 1;
