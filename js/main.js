@@ -464,3 +464,4 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.key === 'ArrowRight') moveCarousel(1);
     });
 });
+
