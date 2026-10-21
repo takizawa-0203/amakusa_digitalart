@@ -1911,7 +1911,7 @@ span.initiative_namber{
     width: 140px;
     height: 140px;
     margin: 10px;
-    transform: rotate(-8deg);
+    transform: rotate(-5deg);
     background-image:url(../img/comment_pepole02.png);
     background-repeat: no-repeat;
     background-position: right bottom;
@@ -2045,6 +2045,22 @@ span.initiative_namber{
     padding: 80px 40px;
 }
 
+.supplement_textbox::before{
+    content: "";
+    position: absolute;
+    right: 3%;
+    bottom: 2%;
+    width: 180px;
+    height: 180px;
+    margin: 10px;
+    transform: rotate(-5deg);
+    background-image:url(../img/comment_pepole06.png);
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: contain;
+    pointer-events: none;
+}
+
 .supplement_title{
     font-size:2.2rem;
     letter-spacing: 0.05rem;
@@ -2073,7 +2089,7 @@ span.initiative_namber{
     border-radius: 100px;
     border: 4px solid #fff;
     font-weight: 700;
-    margin: 20px 0;
+    margin: 15px 0 0;
     text-decoration: none;
     position: relative;
     overflow: hidden;
@@ -2524,7 +2540,7 @@ body.no-scroll {
 }
 
 /* ==============================
-   SP版レスポンシブ
+   タブレット版レスポンシブ
    950px以下
 ============================== */
 
@@ -2689,7 +2705,7 @@ body.no-scroll {
     }
 
     .supplement_sec {
-        flex-direction: column;
+        /* flex-direction: column; */
         height: auto;
     }
 
@@ -2697,15 +2713,16 @@ body.no-scroll {
     .supplement_textbox {
         width: 100%;
     }
-
+    
+   
     .supplement_img img {
         height: auto;
-        aspect-ratio: 16 / 9;
+        aspect-ratio: 3/4;
         border-radius: 15px 15px 0 0;
     }
 
     .supplement_textbox {
-        padding: 40px 30px;
+        padding: 30px;
     }
 
     .supplement_title {
@@ -3339,6 +3356,14 @@ body.no-scroll {
         padding: 30px 20px;
     }
 
+    .support_other_right::before,.dhw_right::before{
+        width: 120px;
+        height: 120px;
+        margin: 0px;
+        right: 2%;
+        bottom: 2%;
+    }
+
     .supplement_title {
         font-size: 1.4rem;
         margin-bottom: 18px;
@@ -3360,6 +3385,24 @@ body.no-scroll {
         margin:10px 0;
     }
 
+    .supplement_sec {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .supplement_img img {
+        height: auto;
+        aspect-ratio: 16/9;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .supplement_textbox::before{
+        right: 2%;
+        bottom: 2%;
+        width: 120px;
+        height: 120px;
+        margin: 0;
+    }
 }
 @media screen and (max-height: 640px) {
     .supplement_link{
@@ -3422,5 +3465,31 @@ body.no-scroll {
         opacity: 1;
         transform: none;
         transition: none;
+    }
+}
+
+/* ===== ひとアニメーション ===== */
+@keyframes pyokoPyoko {
+    0%, 20%, 100% { translate: 0 0;     scale: 1 1; }
+    4%            { translate: 0 -16px; scale: 0.97 1.04; } 
+    8%            { translate: 0 0;     scale: 1.03 0.96; } 
+    12%           { translate: 0 -10px; scale: 0.98 1.03; } 
+    16%           { translate: 0 0;     scale: 1.02 0.98; }
+}
+
+.support_other_right::before,
+.dhw_right::before,
+.supplement_textbox::before {
+    transform-origin: center bottom;
+    animation: pyokoPyoko 4s ease-in-out infinite;
+}
+.dhw_right::before          { animation-delay: 0.3s; }
+.supplement_textbox::before { animation-delay: 0.8s; }
+
+@media (prefers-reduced-motion: reduce) {
+    .support_other_right::before,
+    .dhw_right::before,
+    .supplement_textbox::before {
+        animation: none;
     }
 }
