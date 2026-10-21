@@ -1875,7 +1875,7 @@ span.initiative_namber{
 }
 
 .dhw_right{
-    background-color:#FDEFF2;
+    background-color:#ffdbeb;
     border-radius:0 15px 15px 0;
     width:55%;
     padding: 65px 35px;
@@ -1907,10 +1907,11 @@ span.initiative_namber{
     content: "";
     position: absolute;
     right: 3%;
-    bottom: 3%;
+    bottom: 2%;
     width: 140px;
     height: 140px;
     margin: 10px;
+    transform: rotate(-8deg);
     background-image:url(../img/comment_pepole02.png);
     background-repeat: no-repeat;
     background-position: right bottom;
