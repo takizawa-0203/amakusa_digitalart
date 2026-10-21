@@ -1023,9 +1023,9 @@ body::before {
 }
 
 .data_sec_annotation{
-    font-size: clamp(12px, 4vw, 14px);
+    font-size: 11px;
     text-align: center;
-    margin: 10px auto;
+    margin-top: 10px;
     color: #2a2a2a;
 }
 
@@ -1281,7 +1281,7 @@ body::before {
     color: #ffffff;
     line-height: 1.85;
     font-size:0.84rem;
-    font-weight: 700;
+    font-weight: 500;
     letter-spacing: 0.09em;
 }
 
@@ -1908,7 +1908,6 @@ span.initiative_namber{
     position: absolute;
     right: 3%;
     bottom: 3%;
-    
     width: 140px;
     height: 140px;
     margin: 10px;
@@ -1965,7 +1964,7 @@ span.initiative_namber{
 }
 
 .support_other_title{
-    font-size: 1.4rem;
+    font-size: 1.8rem;
     font-weight: 900;
     letter-spacing: 0.05rem;
     color: #111111;
@@ -1974,7 +1973,7 @@ span.initiative_namber{
 
 .support_other_text{
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 0.05rem;
     color: #111111;
     margin-bottom: 35px;
@@ -2056,7 +2055,7 @@ span.initiative_namber{
 .supplement_text{
     color: #111111;
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 500;
     letter-spacing: 0.05rem;
     margin-bottom: 50px;
 }
