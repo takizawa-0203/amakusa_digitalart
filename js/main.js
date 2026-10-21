@@ -307,6 +307,19 @@ window.addEventListener('touchend', function (e) {
         '.support_ul > li',
         '.supplement_sec',
         '.voice_chat',
+        // ---- 以下、追加分 ----
+        '.initiative_namber',        // 01〜05の大きな数字
+        '.initiative_slide_title',   // ＼ 支援・奨励金一覧 ／ など
+        '.initiative_comment_title', // ＼ 移住した人の声 ／ など
+        '.initiative_ul_03',         // 進出企業一覧(マーキー)。監視は親の .marquee_wrap で行う
+        '.dhw_box',                  // デジタルハリウッドSTUDIO天草
+        '.support_other_box',        // 企業立地ガイド熊本
+        '.data_more_btn',            // VIEW MORE ボタン
+        '.footer_brand',
+        '.footer_nav',
+        '.footer_org',
+        '.footer_sns',
+        '.footer_bottom',
     ];
 
     const elements = document.querySelectorAll(targets.join(','));
@@ -361,7 +374,34 @@ window.addEventListener('touchend', function (e) {
     elements.forEach(function (el) {
         if (el.matches('.initiative_ul_02 > li')) return; // 個別監視から除外
         if (el.matches('.fixed_title_word')) return;      // タイトルは下の処理で出現させる
+        if (el.matches('.initiative_ul_03')) return;      // マーキーは下の処理で出現させる
         revealObserver.observe(el);
+    });
+
+    // 進出企業一覧(.initiative_ul_03)は横幅が非常に長く、スマホでは面積比が閾値に届かないため、
+    // 画面幅ぴったりの親(.marquee_wrap)が見えたら出現させる
+    const marqueeWrap = document.querySelector('.marquee_wrap');
+    const marqueeTrack = document.querySelector('.initiative_ul_03');
+    if (marqueeWrap && marqueeTrack) {
+        const marqueeObserver = new IntersectionObserver(function (entries) {
+            if (!entries.some(function (e) { return e.isIntersecting; })) return;
+            marqueeTrack.classList.add('is-inview');
+            marqueeObserver.disconnect();
+        }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+        marqueeObserver.observe(marqueeWrap);
+    }
+
+    // VIEW MORE ボタンはホバー時に transform/transition を使うため、
+    // 出現が終わったら js-reveal を外して本来のホバー動作に戻す
+    elements.forEach(function (el) {
+        if (!el.matches('.data_more_btn')) return;
+        el.addEventListener('transitionend', function handler(e) {
+            if (e.target !== el || e.propertyName !== 'opacity') return;
+            el.classList.remove('js-reveal', 'is-inview');
+            el.style.transitionDelay = '';
+            el.style.transitionDuration = '';
+            el.removeEventListener('transitionend', handler);
+        });
     });
 
     // Aboutのタイトル(.fixed_title_word)は、ページがほぼ定位置に収まってから浮かび上がらせる
@@ -464,4 +504,3 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.key === 'ArrowRight') moveCarousel(1);
     });
 });
-
