@@ -576,11 +576,6 @@ body::before {
     background-repeat: no-repeat;
 }
 
-/* .fixed01, .fixed02, .fixed03, .fixed04, .fixed05, .fixed06 {
-    background-size: 110% auto;
-    background-position: center center;
-} */
-
 .fixed01 { background-image: url(../img/about_bg01.png); z-index: 1; }
 .fixed02 { background-image: url(../img/about_bg02.png); z-index: 2; }
 .fixed03 { background-image: url(../img/about_bg06.png); z-index: 3; } /* 追加ページ */
@@ -617,6 +612,7 @@ body::before {
 
 .fixed_title {
     font-size: clamp(1.6rem, 4vw, 3.2rem);
+    font-weight: 800;
     letter-spacing: 0.06em;
 }
 
@@ -625,7 +621,7 @@ body::before {
     align-items: baseline;
     width: fit-content;
     background-color: #fff;
-    padding: 10px;
+    padding: 10px 15px;
     margin-bottom: 20px;
 }
 
@@ -693,6 +689,7 @@ body::before {
     font-weight: 700;
     color: #fff;
     letter-spacing: 0.04em;
+    line-height: 1.1;
 }
 
 .next_triangle {
@@ -987,7 +984,6 @@ body::before {
 
 .data_contents_flex:nth-of-type(1) .data_sec .data_src_img {
     max-width: 350px;
-    min-width: 200px;
     margin: 1.5rem auto;
 }
 
@@ -998,12 +994,11 @@ body::before {
 
 .data_contents_flex:nth-of-type(2) .data_sec .data_src_img {
     max-width: 300px;
-    min-width: 150px;
     margin: 1rem auto;
 }
 
 .data_sec_inner{
-    padding:30px 20px 20px;
+    padding:40px 20px 20px;
     margin:auto;
     height: 100%;
     display: flex;
@@ -1011,12 +1006,9 @@ body::before {
     justify-content: space-evenly;
     height: 100%; 
     background-color: rgba(255, 255, 255);
-    border-radius: 15px;
+    border-radius: 30px;
 }
 
-.data_sec::nth-of-type(1){
-    border-right: 1px solid#2448e8;
-}
 
 .data_sec_title{
     font-size:1.5rem;
@@ -1028,6 +1020,13 @@ body::before {
     padding: 5px 10px;
     margin:0 auto;
     letter-spacing: 0.05em;
+}
+
+.data_sec_annotation{
+    font-size: clamp(12px, 4vw, 14px);
+    text-align: center;
+    margin: 10px auto;
+    color: #2a2a2a;
 }
 
 
@@ -1147,7 +1146,7 @@ body::before {
 .initiative_title_en {
     font-size: 150px;
     background-color: #fff;
-    padding: 0 10px;
+    padding: 0 15px;
     line-height: 1;
 }
 
@@ -1371,7 +1370,7 @@ span.initiative_namber{
 
 .initiative_slide_title,.initiative_comment_title{
     color: #fff;
-    font-size: 2.4rem;
+    font-size: 2.6rem;
     text-align: center;
     margin: 90px 0 40px;
     letter-spacing: 0.25rem;
@@ -1402,7 +1401,7 @@ span.initiative_namber{
 }
 
 .initiative_li_inline01{
-    background-color:#ff9447;
+    background-color:#f06957;
 }
 .initiative_li_inline02{
     background-color:#f382a0;
@@ -1420,7 +1419,7 @@ span.initiative_namber{
     background-color:#4ECE9D;
 }
 .initiative_li_inline07{
-    background-color:#f06957;
+    background-color:#ff9447;
 }
 .initiative_li_inline08{
     background-color:#82c6f0;
@@ -1428,7 +1427,7 @@ span.initiative_namber{
 
 .initiative_li_inline01 .money_title,
 .initiative_li_inline01 .company_title{
-    color:#ff9447;   
+    color:#f06957;   
 }
 .initiative_li_inline02 .money_title,
 .initiative_li_inline02 .company_title{
@@ -1452,7 +1451,7 @@ span.initiative_namber{
 }
 .initiative_li_inline07 .money_title,
 .initiative_li_inline07 .company_title{
-    color:#f06957;
+    color:#ff9447;
 }
 .initiative_li_inline08 .money_title,
 .initiative_li_inline08 .company_title{
@@ -1670,7 +1669,7 @@ span.initiative_namber{
     bottom: -25px;
     right: -10px;
     font-family: "Inter", sans-serif;
-    font-size: 11rem; 
+    font-size: 10.5rem; 
     font-weight: 800; 
     line-height: 1;
     color: rgba(255, 255, 255, 0.15);
@@ -1810,7 +1809,7 @@ span.initiative_namber{
     color: #2448e8;
     font-size: 0.9rem;
     letter-spacing: 0.08rem;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.8;
 }
 
@@ -1821,10 +1820,10 @@ span.initiative_namber{
     bottom: -25px;
     right: -10px;
     font-family: "Inter", sans-serif;
-    font-size: 11rem;
+    font-size: 10.5rem;
     font-weight: 800;
     line-height: 1;
-    color: rgba(36, 72, 232, 0.08);
+    color: rgba(36, 72, 232, 0.09);
     z-index: -1;
     pointer-events: none;
 }
@@ -1842,6 +1841,166 @@ span.initiative_namber{
 .support_list span{
     border-bottom: 2px solid;
 }
+
+.support_other,.dhw_area{
+    padding-top: 30px;
+}
+
+.support_other_box,.dhw_box{
+    max-width:900px;
+    margin: 0 auto;
+    display: block;
+    text-decoration: none;
+    display: flex;
+}
+
+.support_other_left img,.dhw_left img{
+    border-radius: 15px 0 0 15px;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+.support_other_left,.dhw_left{
+    width:45%;
+}
+
+.support_other_right{
+    background-color: #aef2f5;
+    border-radius:0 15px 15px 0;
+    width:55%;
+    padding: 65px 35px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.dhw_right{
+    background-color:#FDEFF2;
+    border-radius:0 15px 15px 0;
+    width:55%;
+    padding: 65px 35px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.support_other_right > *,.dhw_right > * {
+    position: relative; 
+}
+
+.support_other_right::before{
+    content: "";
+    position: absolute;
+    right: 3%;
+    bottom: 3%;
+    width: 140px;
+    height: 140px;
+    margin: 10px;
+    background-image:url(../img/comment_pepole01.png);
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: contain;
+    pointer-events: none;
+}
+
+.dhw_right::before{
+    content: "";
+    position: absolute;
+    right: 3%;
+    bottom: 3%;
+    
+    width: 140px;
+    height: 140px;
+    margin: 10px;
+    background-image:url(../img/comment_pepole02.png);
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: contain;
+    pointer-events: none;
+}
+
+.support_other_btn{
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 15px; 
+    background-color: rgba(17, 17, 17, 0.75);
+    font-size: clamp(16px, 2vw, 23px);
+    width: fit-content;
+    padding: 10px 25px 10px 35px; 
+    border-radius: 100px;
+    border: 4px solid #fff;
+    font-weight: 700;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    background-size: 300% 100%;
+    background-image: linear-gradient(to right, rgba(17, 17, 17, 0.75) 0%, rgba(17, 17, 17, 0.75) 30%, #ff1493 45%, #F88B1E 50%, #00ff7f 55%, rgba(17, 17, 17, 0.75) 70%, rgba(17, 17, 17, 0.75) 100%); /* 虹色を内包したグラデーション */
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+
+}
+
+.support_other_btn::after {
+    content: "→"; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; 
+    height: 28px;
+    background-color: #ffffff; 
+    color: #111111; 
+    border-radius: 50%; 
+    font-size: 0.75em;
+    font-weight: 900;
+    font-family: sans-serif;
+    z-index: 1;
+    transition: background-color 0.3s ease, color 0.3s ease; /* ホバー時のアニメーション用 */
+}
+
+.support_other_btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+    animation: rainbowGlow 0.8s ease-in-out forwards; 
+}
+
+.support_other_title{
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 0.05rem;
+    color: #111111;
+    margin-bottom: 25px;
+}
+
+.support_other_text{
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.05rem;
+    color: #111111;
+    margin-bottom: 35px;
+}
+
+/* SP：flexを解除して縦積みに */
+@media screen and (max-width: 767px) {
+    .support_other_box{
+        display: block;
+    }
+
+    .support_other_left,
+    .support_other_right{
+        width: 100%;
+    }
+
+    .support_other_left img{
+        border-radius: 15px 15px 0 0;
+    }
+
+    .support_other_right{
+        padding: 40px 20px;
+    }
+}
+
+
 
 
 /*-------- 04 -------*/
@@ -1861,6 +2020,11 @@ span.initiative_namber{
 .supplement_img{
     width: 45%;
 }
+
+.supplement_img_sp{
+    display: none;
+}
+
 .supplement_textbox{
     width: 55%;
     height: 100%;
@@ -1941,6 +2105,13 @@ span.initiative_namber{
     transition: background-color 0.3s ease, color 0.3s ease; /* ホバー時のアニメーション用 */
 }
 
+.supplement_link:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+    animation: rainbowGlow 0.8s ease-in-out forwards; 
+}
+
+
 @keyframes rainbowGlow {
     0% {
         background-position: 100% 0%;
@@ -1962,7 +2133,7 @@ span.initiative_namber{
     position: relative;
     background-color: #111111;
     color: #ffffff;
-    padding: 60px 24px 0;
+    padding: 60px 24px 10px;
     overflow: hidden;
     text-align: left;
 }
@@ -1991,7 +2162,7 @@ span.initiative_namber{
     max-width: 1200px;
     margin: 0 auto;
     padding-bottom: 50px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.45);
 }
  
 /* ---- ブランドエリア ---- */
@@ -2177,7 +2348,7 @@ span.initiative_namber{
 .footer_bottom {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 30px 0 30px;
+    padding: 30px 80px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -2188,6 +2359,12 @@ span.initiative_namber{
 .footer_amakusa_logo {
     height: 70px;
     width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+}
+.footer_amakusa_logo2 {
+    padding: 15px;
+    max-width: 400px;
     filter: brightness(0) invert(1);
     opacity: 0.85;
 }
@@ -2334,15 +2511,23 @@ body.no-scroll {
 }
 
 /* ==============================
+   タブレット幅(481〜1100px)のルートfont-size補正
+============================== */
+@media screen and (min-width: 481px) and (max-width: 1100px) {
+    html {
+        font-size: clamp(15px, 1.2vw + 6px, 16px);
+    }
+}
+
+/* ==============================
    SP版レスポンシブ
-   900px以下
+   950px以下
 ============================== */
 
 @media screen and (max-width: 950px) {
-    /* タブレット：上が画像・下が文字。画面の高さに合わせて画像を縮小 */
     .fixed_area {
         flex-direction: column;
-        flex-wrap: wrap; /* スマホ・タブレットでは折り返しを許可 */
+        flex-wrap: wrap; 
         text-align: center;
         gap: clamp(15px, 2.5svh, 30px);
         padding: clamp(80px, 10svh, 110px) 0 clamp(100px, 12svh, 130px);
@@ -2350,7 +2535,6 @@ body.no-scroll {
 
     .fixed_img {
         order: 1;
-        /* PC用の flex-basis が縦積みでは「高さ」になり、文字と重なるためリセット */
         flex: 0 0 auto;
         width: min(80%, 420px, 36svh);
         max-width: none;
@@ -2358,7 +2542,7 @@ body.no-scroll {
 
     .fixed_text {
         order: 2;
-        flex-grow: 0; /* 縦積みでは伸ばさない */
+        flex-grow: 0; 
         width: 100%;
         min-width: 0;
     }
@@ -2366,12 +2550,17 @@ body.no-scroll {
     .fixed_title {
         font-size: clamp(1.6rem, min(4vw, 3.8svh), 3.2rem);
     }
+    
+    .fixed_title_word{
+        margin-bottom:10px ;
+    }
 
     .fixed_body-text {
         margin-top: clamp(15px, 3svh, 40px);
+        text-align: left; 
+        font-size: clamp(15px, 2.2vw, 18px); 
     }
 
-    /* 背の低いタブレット表示：画像と余白をさらに圧縮 */
     @media screen and (max-height: 700px) {
         .fixed_area {
             padding-top: 70px;
@@ -2380,19 +2569,21 @@ body.no-scroll {
         .fixed_img {
             width: min(80%, 420px, 28svh);
         }
+        .fixed_body-text {
+            font-size: clamp(14px, 2.4svh, 17px);
+        }
     }
 
-    /* 950px以下の時のデコレーション位置調整 */
     .fixed_title04::before {
         width: 120px;
         height: 95px;
-        top: -60px;
-        left: 50%;
-        transform: translateX(-50%); /* 中央寄せ */
+        top: -100px;
+        left: 10%;
+        transform: translateX(-50%); 
     }
 
     .next_container{
-        bottom: 70px;
+        bottom: 100px;
     }
 
     .next_triangle{
@@ -2404,21 +2595,21 @@ body.no-scroll {
         max-height: 45vh;
     }
 
+    .movie_contents {
+    border-radius:0;
+    }
+
     .data_contents_flex:nth-of-type(2) {
-        flex-direction: column; 
-        gap: 30px;            
+        flex-direction: column;       
     }
 
     .data_contents_flex:nth-of-type(2) .data_sec {
         width: 100%;    
     }
 
-    /* ========================================
-       ここから .initiative_inline 配下
-       タブレット幅(951〜950px)対応
-       (これまでデスクトップ用スタイルが
-        480px以下まで維持されていた分を補完)
-    ======================================== */
+    .voice_chat_contents{
+        grid-template-columns: none;
+    }
 
     .initiative_sec_inline {
         width: 88%;
@@ -2439,7 +2630,6 @@ body.no-scroll {
         top: 30px;
     }
 
-    /* 80%固定だとタブレットでは余白が大きすぎるため全幅に */
     .initiative_inline p {
         width: 100%;
         max-width: 640px;
@@ -2461,7 +2651,6 @@ body.no-scroll {
         line-height: 1.8;
     }
 
-    /* 01・04: 画像＋キャプションのリスト → 2列に */
     .initiative_ul {
         flex-wrap: wrap;
         justify-content: center;
@@ -2473,22 +2662,18 @@ body.no-scroll {
         width: calc(50% - 15px);
     }
 
-    /* 02: 支援・奨励金カード */
     .initiative_ul_02 {
         gap: 16px;
     }
 
-    /* 03: 進出企業マーキーカード */
     .initiative_li_03 {
         width: 280px;
     }
 
-    /* 03: 拠点開設支援策 → 2列のまま、余白だけ調整 */
     .support_ul {
         gap: 15px;
     }
 
-    /* 見出し「支援・奨励金一覧」「進出企業一覧」「移住した人の声」 */
     .initiative_slide_title,
     .initiative_comment_title {
         font-size: clamp(20px, 3.5vw, 28px);
@@ -2499,7 +2684,6 @@ body.no-scroll {
         padding: 50px 0;
     }
 
-    /* 04: 官民合同会社セクション → 横並びをやめて縦積みに */
     .supplement_sec {
         flex-direction: column;
         height: auto;
@@ -2530,6 +2714,11 @@ body.no-scroll {
         margin-bottom: 35px;
     }
 
+    .support_other_right::before {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}
 }
 
 
@@ -2592,18 +2781,10 @@ body.no-scroll {
         grid-template-columns: 1fr;
     }
 
-    /* ---------- ローディング ---------- */
     .loading-circle {
         width: 220px;
         height: 220px;
     }
-
-    /* ---------- KV ---------- */
-    /* 旧: ここに .keyv / .keyv img を絶対配置(width:auto)で
-       再定義するルールがあり、中身が空の div が幅0に潰れて
-       キービジュアルが非表示になっていたため削除。
-       表示に必要な設定は上の 480px ブロック内の .keyv
-       (width:100%, background-image指定) に統一。 */
 
     .maincopy {
         padding-left: 24px;
@@ -2618,7 +2799,6 @@ body.no-scroll {
         z-index: 2;
     }
 
-    /* ---------- ヘッダー ---------- */
     .header_logo {
         position: absolute;
         padding-left: 24px;
@@ -2671,7 +2851,6 @@ body.no-scroll {
         width: 55%;
     }
 
-    /* ---------- ナビゲーション ---------- */
     .nav-inner {
         top: 54px;
         right: 54px;
@@ -2711,7 +2890,6 @@ body.no-scroll {
         font-size: clamp(12px, 3vw, 16px);
     }
 
-    /* ---------- スクロールバー ---------- */
     .scrollbar-text {
         right: 24px;
         padding: 10px 10px 140px;
@@ -2720,7 +2898,6 @@ body.no-scroll {
     .scrollbar { right: 40px; bottom: 50px; }
     .scrollbar::after { height: 80px; }
 
-    /* ---------- ABOUT ---------- */
     .about {
         margin-top: 0 !important;
         position: static !important;
@@ -2758,7 +2935,6 @@ body.no-scroll {
         min-height: 600px;
     }
 
-    /* 各スライドの背景 */
     .fixed01, .fixed02, .fixed03, .fixed04, .fixed05, .fixed06 {  
         width: 100%;
         height: 100vh;
@@ -2770,9 +2946,6 @@ body.no-scroll {
         background-repeat: no-repeat;
     }
 
-    /* ===== 上：画像 / 下：文字 の縦積み（機種の高さに合わせて自動縮小） =====
-       ・画像サイズ・文字サイズ・余白を画面の高さ(svh)基準にして1画面に収める
-       ・下部は「next」ボタンぶんの余白を確保 */
     .fixed_area {
         width: 88%;
         height: 100%;
@@ -2831,16 +3004,15 @@ body.no-scroll {
     .fixed_title04::before {
     width: 110px;
     height: 85px;
-    top: -90px;
-    left: 7%;
-    transform: translateX(-50%); /* 中央寄せ */
+    top: -82px;
+    left: 10%;
+    transform: translateX(-50%); 
 }
 
-    /* ---------- NEXT ---------- */
     .next_container { bottom: 100px; }
     .next_text {
-        font-size: clamp(14px, 4vw, 18px);
-        margin-bottom: -1px;
+        font-size: clamp(14px, 5vw, 20px);
+        margin-bottom: 2px;
     }
     .next_triangle { height: 22px; }
 
@@ -2849,7 +3021,6 @@ body.no-scroll {
         100% { transform: translateY(7px); }
     }
 
-        /* 背の低い端末（iPhone SE など）：さらに画像・余白を圧縮 */
     @media screen and (max-height: 640px) {
         .fixed_area {
             padding-top: 70px;
@@ -2875,7 +3046,6 @@ body.no-scroll {
         .next_container { bottom: 150px; }
     }
 
-    /* ---------- MOVIE ---------- */
     .movie {
         padding: 180px 0 100px;
         min-height: auto;
@@ -2930,7 +3100,6 @@ body.no-scroll {
         width: 100%;
         max-width: 420px;
         aspect-ratio: 16 / 9;
-        padding: 10px;
     }
 
     .movie_area1 iframe {
@@ -2974,7 +3143,6 @@ body.no-scroll {
     }
     
 
-    /* ---------- データで見る天草 ---------- */
     .data {
     padding: 100px 0;
     }
@@ -2994,7 +3162,6 @@ body.no-scroll {
 
     .data_contents_flex {
         flex-direction: column; 
-        gap: 30px;
     }
     .data_contents_flex:nth-of-type(1) .data_sec,
     .data_contents_flex:nth-of-type(2) .data_sec {
@@ -3014,8 +3181,6 @@ body.no-scroll {
     display: block;
 }
 
-      /* ---------- 各施策 ---------- */
-
     .initiative_title_en {
         font-size: clamp(56px, 18vw, 86px);
         padding: 0 8px;
@@ -3028,7 +3193,6 @@ body.no-scroll {
         white-space: nowrap;
     }
 
-    /* ---- 各施策 本文共通 ---- */
     .initiative_sec_inline {
         width: 88%;
         padding: 80px 0;
@@ -3040,8 +3204,8 @@ body.no-scroll {
     .initiative_sec04::before,
     .initiative_sec05::before {
         width: 90vw;
-        top: 8%;
-        right: -30%;
+        top: 10px;
+        right: -40%;
     }
 
     .initiative_heading_jp {
@@ -3087,7 +3251,6 @@ body.no-scroll {
         line-height: 1.75;
     }
 
-    /* ---- 01・04: 画像＋キャプションのリスト ---- */
     .initiative_ul {
         flex-direction: column;
         gap: 50px;
@@ -3103,10 +3266,9 @@ body.no-scroll {
     margin-top: 15px;
     }
 
-    /* ---- 見出し「支援・奨励金一覧」「進出企業一覧」「移住した人の声」 ---- */
     .initiative_slide_title,
     .initiative_comment_title {
-        font-size: clamp(18px, 5.5vw, 24px);
+        font-size: clamp(18px, 6.5vw, 25px);
         margin: 50px 0 25px;
         letter-spacing: 0.08rem;
     }
@@ -3115,7 +3277,6 @@ body.no-scroll {
         padding: 30px 0;
     }
 
-    /* ---- 02: 支援・奨励金カード ---- */
     .initiative_ul_02 {
         grid-template-columns: 1fr;
         gap: 15px;
@@ -3128,7 +3289,7 @@ body.no-scroll {
 
     .money_title,
     .company_title {
-        font-size: 0.9rem;
+        font-size: 14px;
         margin-bottom: 15px;
     }
 
@@ -3141,7 +3302,6 @@ body.no-scroll {
     display:block;
 }
 
-    /* ---- 03: 進出企業マーキー ---- */
     .initiative_li_03 {
         width: 260px;
         padding: 25px 20px 30px;
@@ -3151,7 +3311,6 @@ body.no-scroll {
         font-size: 12px;
     }
 
-    /* ---- 03: 拠点開設支援策 ---- */
     .support_ul {
         grid-template-columns: 1fr;
         gap: 15px;
@@ -3163,16 +3322,15 @@ body.no-scroll {
     }
 
     .support_title {
-        font-size: 0.9rem;
+        font-size: 14px;
         margin-bottom: 15px;
     }
 
-    .support_list::before {
-        font-size: 8rem;
-        bottom: -18px;
+    .support_text {
+    font-size: 13px;
+    line-height: 1.75;
     }
 
-    /* 04: 官民合同会社セクション（スマホ向け微調整） */
     .supplement_textbox {
         padding: 30px 20px;
     }
@@ -3185,6 +3343,17 @@ body.no-scroll {
     .supplement_text {
         font-size: 14px;
         margin-bottom: 25px;
+    }
+
+    .supplement_img_pc{
+    display: none;
+    }
+    .supplement_img_sp{
+    display: block;
+    }
+
+    .supplement_link{
+        margin:10px 0;
     }
 
 }
@@ -3206,7 +3375,6 @@ body.no-scroll {
 }
 
 
-/* --- スマホ・タブレット版（1100px以下）のレイアウト --- */
 @media screen and (max-width: 1100px) {
     .initiative_comment {
         padding: 40px 0;
@@ -3216,12 +3384,7 @@ body.no-scroll {
 
 
 /* ==============================
-   iOS Safari 対応:
-   background-attachment: fixed は iOS Safari で
-   overflow:hidden を持つ祖先要素があると背景が
-   描画されなくなる既知の不具合があるため、
-   iOS系ブラウザ(WebKit)のみ scroll に切り替える。
-   (幅に関わらず横向き表示なども含めて対応)
+   iOS Safari 対応
 ============================== */
 @supports (-webkit-touch-callout: none) {
     body::before {
@@ -3235,7 +3398,7 @@ body.no-scroll {
 
 
 /* ==============================
-   スクロールで要素がふわっと出現する
+   スクロールふわっと出現
 ============================== */
 .js-reveal {
     opacity: 0;
@@ -3250,7 +3413,6 @@ body.no-scroll {
     transform: translateY(0);
 }
 
-/* 動きを抑えたい */
 @media (prefers-reduced-motion: reduce) {
     .js-reveal {
         opacity: 1;
