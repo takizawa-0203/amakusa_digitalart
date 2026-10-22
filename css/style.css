@@ -973,8 +973,7 @@ body::before {
     display: flex;
     flex-wrap: wrap;
     padding:30px 0;
-    width: 80%;
-    max-width:90rem;
+    max-width:1080px;
     margin: 0 auto;
 }
 
@@ -1212,7 +1211,7 @@ body::before {
     content: "";
     position: absolute;
     top: 0%;
-    right: -32%;
+    right: -20%;
     transform: translateY(-50%);
     width: 80vw;
     max-width: 1000px;
@@ -1224,7 +1223,7 @@ body::before {
 
 /*-------- 共有文字設定 -------*/
 .initiative_sec_inline{
-    width: 80%;
+   max-width: 1080px;
     margin: auto;
     padding:150px 0px;
 }
@@ -1295,13 +1294,13 @@ span.initiative_namber{
 }
 
 .initiative_inline p{
-    width: 65%;
+    width: 70%;
     max-width: 720px;
 }
 
 .initiative_supplement{
     color: #fff;
-    font-size: 13px;
+    font-size: 12px;
     letter-spacing: 0.1rem;
     font-weight: 500;
 }
@@ -2050,8 +2049,8 @@ span.initiative_namber{
     position: absolute;
     right: 3%;
     bottom: 2%;
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
     margin: 10px;
     transform: rotate(-5deg);
     background-image:url(../img/comment_pepole06.png);
@@ -2568,7 +2567,7 @@ body.no-scroll {
     }
 
     .fixed_title {
-        font-size: clamp(1.6rem, min(4vw, 3.8svh), 3.2rem);
+        font-size: clamp(2.8rem, min(5vw, 3.8svh), 3.2rem);
     }
     
     .fixed_title_word{
@@ -2578,7 +2577,7 @@ body.no-scroll {
     .fixed_body-text {
         margin-top: clamp(15px, 3svh, 40px);
         text-align: left; 
-        font-size: clamp(15px, 2.2vw, 18px); 
+        font-size: clamp(16px, 2.5vw, 19px); 
     }
 
     @media screen and (max-height: 700px) {
@@ -2618,13 +2617,20 @@ body.no-scroll {
     .movie_contents {
     border-radius:0;
     }
+    
+    .data_contents{
+         width: 88%;
+    }
 
     .data_contents_flex:nth-of-type(2) {
-        flex-direction: column;       
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
     }
 
     .data_contents_flex:nth-of-type(2) .data_sec {
-        width: 100%;    
+        width: calc(50% - 10px);
     }
 
     .voice_chat_contents{
