@@ -1005,7 +1005,7 @@ body::before {
     justify-content: space-evenly;
     height: 100%; 
     background-color: rgba(255, 255, 255);
-    border-radius: 30px;
+    border-radius: 20px;
 }
 
 
@@ -1280,7 +1280,7 @@ body::before {
     color: #ffffff;
     line-height: 1.85;
     font-size:0.84rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.09em;
 }
 
@@ -1320,6 +1320,7 @@ span.initiative_namber{
 
 .initiative_img img {
     border-radius: 10px 10px 0 0;
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.1);
 }
 
 .initiative_caption{
@@ -1331,6 +1332,7 @@ span.initiative_namber{
     font-weight: 800;
     letter-spacing: 0.04em;
     border-radius:0 0 10px 10px;
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.1);
 }
 
 .initiative_sentence_link {
@@ -1469,12 +1471,14 @@ span.initiative_namber{
     line-height: 1.7;
     letter-spacing: 0.08rem;
     border-radius: 15px;
+    box-shadow: 0 5px 30px -5px rgba(0, 0, 0, 0.1);
 }
+
 .initiative_li_tagline{
     color: #fff;
     font-size: 0.9rem;
     letter-spacing: 0.08rem;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.8;
 }
 
@@ -1788,6 +1792,7 @@ span.initiative_namber{
     width: 100%;
     border-radius: 15px;
     counter-increment: support;
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.1);
 }
 
 /* 支援・奨励金一覧(.money_title)と同じピル型タイトル（配色は反転） */
@@ -1851,6 +1856,7 @@ span.initiative_namber{
     display: block;
     text-decoration: none;
     display: flex;
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.1);
 }
 
 .support_other_left img,.dhw_left img{
@@ -1981,7 +1987,7 @@ span.initiative_namber{
 
 /* SP：flexを解除して縦積みに */
 @media screen and (max-width: 767px) {
-    .support_other_box,.dhw_box{
+    .support_other_box,.dhw_box,.supplement_sec{
         display: block;
     }
 
@@ -2018,6 +2024,7 @@ span.initiative_namber{
     background-color:#c3e529;
     margin:40px 0;
     border-radius: 15px;
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.1);
 }
 
 .supplement_img{
@@ -2061,7 +2068,7 @@ span.initiative_namber{
 }
 
 .supplement_title{
-    font-size:2.2rem;
+    font-size:2.1rem;
     letter-spacing: 0.05rem;
     font-weight: 900;
     color: #111111;
@@ -2711,9 +2718,17 @@ body.no-scroll {
     }
 
     .supplement_sec {
-        /* flex-direction: column; */
+        flex-direction: column;
         height: auto;
     }
+
+    .supplement_img_pc{
+    display: none;
+    }
+    .supplement_img_sp{
+    display: block;
+    }
+
 
     .supplement_img,
     .supplement_textbox {
@@ -2723,7 +2738,6 @@ body.no-scroll {
    
     .supplement_img img {
         height: auto;
-        aspect-ratio: 3/4;
         border-radius: 15px 15px 0 0;
     }
 
