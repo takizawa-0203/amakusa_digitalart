@@ -133,15 +133,20 @@
         function easeInOutCubic(t) {
             return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
         }
+        function jumpTo(y) {
+            // html:focus-within の scroll-behavior:smooth と干渉しないよう即時移動
+            try { window.scrollTo({ top: y, left: 0, behavior: 'instant' }); }
+            catch (e) { window.scrollTo(0, y); }
+        }
         function smoothScrollTo(target, duration) {
             isScrolling = true;
             var start = getScrollTop(), dist = target - start, t0 = performance.now();
             function step(now) {
                 var p = Math.min((now - t0) / duration, 1);
-                window.scrollTo(0, start + dist * easeInOutCubic(p));
+                jumpTo(start + dist * easeInOutCubic(p));
                 if (p < 1) requestAnimationFrame(step);
                 else {
-                    window.scrollTo(0, target);
+                    jumpTo(target);
                     setTimeout(function () { isScrolling = false; }, 50);
                 }
             }
@@ -163,38 +168,131 @@
         window.addEventListener('resize', computePositions);
         window.addEventListener('load', computePositions);
 
-        window.addEventListener('wheel', function (e) {
-            // ズーム(Ctrl+ホイール)・横スクロール・メニュー表示中・動きを減らす設定のときは通常動作
-            if (e.ctrlKey || e.metaKey || reduceMotion || body.classList.contains('no-scroll')) return;
-            if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.deltaY === 0) return;
-
-            if (isScrolling) { e.preventDefault(); return; }
-
+        // 方向(1:下 / -1:上)に対する移動先を返す
+        //   数値 : そこへスクロール / -1 : 何もせず通常スクロールも止める / null : 通常スクロール
+        function resolveTarget(direction) {
+            computePositions();
             var cur = getScrollTop();
-            var direction = e.deltaY > 0 ? 1 : -1;
             var count = positions.length - 2;
             var aboutStart = positions[1], aboutEnd = positions[count], movieTop = positions[count + 1];
 
-            if (direction === 1 && cur < aboutStart - 5) {
-                e.preventDefault(); smoothScrollTo(aboutStart, 800); return;
-            }
-            if (direction === -1 && cur >= movieTop - 5 && cur <= movieTop + 80) {
-                e.preventDefault(); smoothScrollTo(aboutEnd, 800); return;
-            }
+            if (direction === 1 && cur < aboutStart - 5) return aboutStart;
+            if (direction === -1 && cur >= movieTop - 5 && cur <= movieTop + 80) return aboutEnd;
             if (cur >= aboutStart - 5 && cur < movieTop - 5) {
-                e.preventDefault();
                 var idx = 1, min = Infinity;
                 for (var i = 1; i <= count + 1; i++) {
                     var d = Math.abs(cur - positions[i]);
                     if (d < min) { min = d; idx = i; }
                 }
                 var next = idx + direction;
-                if (next >= 1 && next <= count + 1) smoothScrollTo(positions[next], 800);
-                else if (next < 1) smoothScrollTo(0, 800);
+                if (next >= 1 && next <= count + 1) return positions[next];
+                if (next < 1) return 0;
+                return -1;
             }
+            return null;
+        }
+
+        function stepsDisabled() {
+            return reduceMotion || body.classList.contains('no-scroll');
+        }
+
+        // ----- PC：ホイール -----
+        window.addEventListener('wheel', function (e) {
+            // ズーム(Ctrl+ホイール)・横スクロール・メニュー表示中・動きを減らす設定のときは通常動作
+            if (e.ctrlKey || e.metaKey || stepsDisabled()) return;
+            if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.deltaY === 0) return;
+
+            if (isScrolling) { e.preventDefault(); return; }
+
+            var target = resolveTarget(e.deltaY > 0 ? 1 : -1);
+            if (target === null) return;
+            e.preventDefault();
+            if (target >= 0) smoothScrollTo(target, 800);
         }, { passive: false });
-        // ※ タッチ端末はネイティブのスクロール（sticky）に任せる。
-        //   以前の touchend での自動スクロールは慣性スクロールと競合していたため削除。
+
+        // ----- SP・タブレット：スワイプ（1スワイプ = 1セクション） -----
+        // ネイティブスクロール（慣性）を止め、指を離したときに1枚だけ移動する
+        var touch = { active: false, axis: null, startX: 0, startY: 0, startT: 0, lastY: 0 };
+        var touching = false;
+        var settleTimer = null;
+        var SWIPE_MIN = 40;      // px：これ以上動かせばめくる
+        var FLICK_MIN = 0.45;    // px/ms：素早いフリックなら短い距離でもめくる
+
+        function inCarousel(el) {
+            return !!(el && el.closest && el.closest('#carousel3d'));
+        }
+
+        document.addEventListener('touchstart', function (e) {
+            touching = true;
+            clearTimeout(settleTimer);
+            touch.active = false;
+            touch.axis = null;
+            if (e.touches.length !== 1 || stepsDisabled() || inCarousel(e.target)) return;
+            touch.active = true;
+            touch.startX = e.touches[0].clientX;
+            touch.startY = touch.lastY = e.touches[0].clientY;
+            touch.startT = e.timeStamp;
+        }, { passive: true });
+
+        document.addEventListener('touchmove', function (e) {
+            if (!touch.active) return;
+            var t = e.touches[0];
+            touch.lastY = t.clientY;
+
+            if (isScrolling) { if (e.cancelable) e.preventDefault(); return; }
+
+            if (touch.axis === null) {
+                var dx0 = t.clientX - touch.startX, dy0 = t.clientY - touch.startY;
+                if (Math.max(Math.abs(dx0), Math.abs(dy0)) < 2) return;
+                if (Math.abs(dx0) > Math.abs(dy0)) { touch.axis = 'x'; touch.active = false; return; }
+                touch.axis = 'y';
+                // 指を上へ動かす(dy<0) = 下へ進む
+                touch.blocked = resolveTarget(dy0 < 0 ? 1 : -1) !== null;
+            }
+            if (touch.blocked && e.cancelable) e.preventDefault();
+        }, { passive: false });
+
+        document.addEventListener('touchend', function (e) {
+            touching = false;
+            var wasActive = touch.active && touch.axis === 'y' && touch.blocked;
+            touch.active = false;
+            if (!wasActive || isScrolling) { scheduleSettle(); return; }
+
+            var dy = touch.startY - touch.lastY;          // 正：下へ進む
+            var dt = Math.max(e.timeStamp - touch.startT, 1);
+            var fast = Math.abs(dy) > 15 && Math.abs(dy) / dt > FLICK_MIN;
+            if (Math.abs(dy) < SWIPE_MIN && !fast) return;
+
+            var target = resolveTarget(dy > 0 ? 1 : -1);
+            if (target !== null && target >= 0) smoothScrollTo(target, 650);
+        }, { passive: true });
+
+        document.addEventListener('touchcancel', function () {
+            touching = false;
+            touch.active = false;
+        }, { passive: true });
+
+        // ----- 保険：タッチ端末で慣性などによりセクション途中で止まったら、最寄りの1枚に吸着 -----
+        var usedTouch = false;
+        window.addEventListener('touchstart', function () { usedTouch = true; }, { passive: true, once: true });
+
+        function settleToNearest() {
+            if (!usedTouch || touching || isScrolling || stepsDisabled()) return;
+            computePositions();
+            var cur = getScrollTop();
+            var count = positions.length - 2;
+            if (!(cur > positions[1] + 3 && cur < positions[count + 1] - 5)) return;
+            var idx = 1, min = Infinity;
+            for (var i = 1; i <= count + 1; i++) {
+                var d = Math.abs(cur - positions[i]);
+                if (d < min) { min = d; idx = i; }
+            }
+            if (min > 3) smoothScrollTo(positions[idx], 400);
+        }
+        function scheduleSettle() {
+            clearTimeout(settleTimer);
+            settleTimer = setTimeout(settleToNearest, 160);
+        }
 
         // ===== スクロールで要素がふわっと出現 =====
         var targets = [
@@ -284,6 +382,7 @@
             ticking = true;
             requestAnimationFrame(function () { updateTitle(); revealSettledTitles(); });
         }
+        window.addEventListener('scroll', function () { scheduleSettle(); }, { passive: true });
         window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', revealSettledTitles);
         revealSettledTitles();
