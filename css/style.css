@@ -3,8 +3,8 @@
 }
 
 html {
-    font-size: clamp(12px, 1.5vw, 16px);
-    font-family: "Noto Sans JP", "Alegreya Sans", sans-serif;
+    font-size: clamp(0.8125rem, 0.7rem + 0.45vw, 1rem);
+    font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", "Meiryo", "Alegreya Sans", sans-serif;
     font-feature-settings: "palt";
     width: 100%;
     overflow-x: clip;
@@ -173,7 +173,6 @@ body::before {
 }
 
 .keyv {
-    content: "";
     display: block;
     top: 0;
     left: 0;
@@ -264,13 +263,14 @@ body::before {
 
 /*ボタン内側*/
 .openbtn .openbtn-area {
+    display: block;
     position: relative;
     transition: all .6s;
     width: 71px;
     height: 71px;
 }
 
-.openbtn span {
+.openbtn .openbtn-area span {
     display: inline-block;
     transition: all .4s;
     position: absolute;
@@ -281,15 +281,15 @@ body::before {
     width: 53%;
 }
 
-.openbtn span:nth-of-type(1) {
+.openbtn .openbtn-area span:nth-of-type(1) {
     top: 22px;   
 }
 
-.openbtn span:nth-of-type(2) {
+.openbtn .openbtn-area span:nth-of-type(2) {
     top: 34px;
 }
 
-.openbtn span:nth-of-type(3) {
+.openbtn .openbtn-area span:nth-of-type(3) {
     top: 46px;
 }
 
@@ -297,18 +297,18 @@ body::before {
     transform: rotate(360deg);
 }
 
-.openbtn.active span:nth-of-type(1) {
+.openbtn.active .openbtn-area span:nth-of-type(1) {
     top: 28px;
     left: 17px;
     transform: translateY(6px) rotate(-45deg);
     width: 53%;
 }
 
-.openbtn.active span:nth-of-type(2) {
+.openbtn.active .openbtn-area span:nth-of-type(2) {
     opacity: 0;
 }
 
-.openbtn.active span:nth-of-type(3) {
+.openbtn.active .openbtn-area span:nth-of-type(3) {
     top: 40px;
     left: 17px;
     transform: translateY(-6px) rotate(45deg);
@@ -322,6 +322,8 @@ body::before {
     left: 0;
     width: 100%;
     height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
     background: rgba(0, 0, 0, 0.85); 
     z-index: 1000;
     display: flex;
@@ -1004,7 +1006,7 @@ body::before {
     flex-direction: column;
     justify-content: space-evenly;
     height: 100%; 
-    background-color: rgba(255, 255, 255);
+    background-color: #fff;
     border-radius: 20px;
 }
 
@@ -1040,7 +1042,7 @@ body::before {
 .data_src_text-b{
     font-family: "Inter", sans-serif;
     font-size: clamp(45px, 6vw, 75px);
-    background: linear-gradient(0deg, #a9c0ff 11%, #2448e8 48%);
+    background: linear-gradient(0deg, #6f8cff 11%, #2448e8 48%);
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
@@ -2138,20 +2140,6 @@ span.initiative_namber{
 }
 
 
-@keyframes rainbowGlow {
-    0% {
-        background-position: 100% 0%;
-    }
-    100% {
-        background-position: 0% 0%;
-    }
-}
-
-.supplement_link:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
-    animation: rainbowGlow 0.8s ease-in-out forwards; 
-}
 
 
 /* ---------- Footer ---------- */
@@ -2541,7 +2529,7 @@ body.no-scroll {
 ============================== */
 @media screen and (min-width: 481px) and (max-width: 1100px) {
     html {
-        font-size: clamp(15px, 1.2vw + 6px, 16px);
+        font-size: clamp(0.9375rem, 0.9rem + 0.2vw, 1rem);
     }
 }
 
@@ -2771,7 +2759,7 @@ body.no-scroll {
 @media screen and (max-width: 480px) {
 
     html {
-        font-size: clamp(12px, 3.5vw, 16px);
+        font-size: clamp(0.8125rem, 0.5rem + 1.4vw, 1rem);
     }
 
     .keyv {
@@ -2868,24 +2856,24 @@ body.no-scroll {
         height: 54px;
     }
 
-    .openbtn span {
+    .openbtn .openbtn-area span {
         left: 12px;
         width: 55%;
         height: 3px;
     }
 
-    .openbtn span:nth-of-type(1) { top: 16px; }
-    .openbtn span:nth-of-type(2) { top: 26px; }
-    .openbtn span:nth-of-type(3) { top: 36px; }
+    .openbtn .openbtn-area span:nth-of-type(1) { top: 16px; }
+    .openbtn .openbtn-area span:nth-of-type(2) { top: 26px; }
+    .openbtn .openbtn-area span:nth-of-type(3) { top: 36px; }
 
-    .openbtn.active span:nth-of-type(1) {
+    .openbtn.active .openbtn-area span:nth-of-type(1) {
         top: 21px;
         left: 12px;
         transform: translateY(5px) rotate(-45deg);
         width: 55%;
     }
 
-    .openbtn.active span:nth-of-type(3) {
+    .openbtn.active .openbtn-area span:nth-of-type(3) {
         top: 31px;
         left: 12px;
         transform: translateY(-5px) rotate(45deg);
@@ -3403,6 +3391,7 @@ body.no-scroll {
 
     .supplement_link{
         margin:10px 0;
+        font-size: clamp(16px, 2vw, 20px);
     }
 
     .supplement_sec {
@@ -3513,3 +3502,71 @@ body.no-scroll {
         animation: none;
     }
 }
+
+/* =====================================================================
+   修正追記：アクセシビリティ・可読性・不具合対応
+   ===================================================================== */
+
+/* --- 共通ユーティリティ --- */
+.sr-only {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.skip_link {
+    position: fixed; left: 12px; top: -80px; z-index: 10000000;
+    background: #fff; color: #2448e8; padding: 10px 16px; border-radius: 8px;
+    font-weight: 700; text-decoration: none; transition: top .2s;
+}
+.skip_link:focus { top: 12px; }
+
+/* --- splash：再訪時は最初から非表示（head内スクリプトで html.visited を付与） --- */
+html.visited #splash { display: none !important; }
+
+/* --- フォーカス表示（キーボード操作） --- */
+a:focus-visible, button:focus-visible {
+    outline: 3px solid #ffd400;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px #111;
+}
+.openbtn, .carousel-arrow { color: #fff; }
+.openbtn { padding: 0; font: inherit; }
+.openbtn:focus-visible, .carousel-arrow:focus-visible {
+    animation: diagonalRainbowGlow 1.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+.data_more_btn:focus-visible, .support_other_btn:focus-visible, .supplement_link:focus-visible, .footer_more_btn:focus-visible {
+    animation: rainbowGlow 0.8s ease-in-out forwards;
+}
+
+/* --- 文字サイズの下限引き上げ --- */
+.data_sec_annotation { font-size: 12px; }
+.initiative_supplement { font-size: max(13px, 0.8rem); line-height: 1.7; }
+.company_text { font-size: max(13px, 0.8rem); }
+.initiative_sentence { font-size: max(14px, 0.875rem); }
+.initiative_li_tagline, .support_text { font-size: max(14px, 0.9rem); }
+.footer_link_jp, .footer_org_sub { font-size: max(12px, 0.78rem); }
+.footer_copyright { font-size: max(12px, 0.75rem); }
+@media screen and (max-width: 480px) {
+    .fixed_body-text { font-size: max(13px, clamp(12px, min(3.5vw, 2.1svh), 15px)); }
+    .initiative_supplement { font-size: 12.5px; }
+}
+
+/* --- ナビ：低い画面（スマホ横向き等）で切れないように --- */
+@media screen and (max-height: 700px) {
+    #g-navi li { margin: 12px 0; }
+    .navi_text_en { font-size: clamp(34px, 9vh, 65px); }
+}
+
+/* --- INITIATIVE 見出し：481〜700px幅での見切れ対策 --- */
+.initiative_title_en { font-size: clamp(56px, 18vw, 150px); }
+
+/* --- マーキー（li > a 構造に対応、一時停止） --- */
+.initiative_li_03 > a {
+    display: flex; flex-direction: column; flex: 1;
+    color: inherit; text-decoration: none;
+}
+.marquee_wrap:hover .marquee_track,
+.marquee_wrap:focus-within .marquee_track { animation-play-state: paused; }
+
+/* --- カルーセル：非アクティブ動画は操作不可 --- */
+.slider-item:not(.active) iframe { visibility: hidden; }
+.slider-item.prev iframe, .slider-item.next iframe { visibility: visible; }
