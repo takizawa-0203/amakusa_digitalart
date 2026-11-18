@@ -66,7 +66,7 @@ img {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 25px; /* 画像とテキストの間隔 */
+    gap: 25px;
 }
 
 .loading-circle {
@@ -75,7 +75,6 @@ img {
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-    /* 上下にふわふわ揺れるバウンス */
     animation: loadingBounce 1.4s ease-in-out infinite;
 }
 
@@ -95,7 +94,7 @@ img {
     object-fit: cover;
 }
 
-/* loading... 文字 */
+/* loading文字 */
 .loading-text {
     color: #ffffff;
     font-family: "Alegreya Sans", sans-serif;
@@ -106,7 +105,7 @@ img {
     margin: 0;
 }
 
-/* 1文字ずつ上下にウェーブする演出 */
+/* ウェーブ */
 .loading-text span {
     display: inline-block;
     animation: letterWave 1.4s ease-in-out infinite;
@@ -127,7 +126,6 @@ body.appear #splash::before {
     height: 300vmax;
 }
 
-/* ラッパーごとフェードアウト */
 body.appear .loading-wrapper {
     opacity: 0;
     transition: opacity 0.5s ease;
@@ -375,7 +373,6 @@ body::before {
     padding: 0;
     margin: 0;
     text-align: center;  
-/*非表示*/
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.4s ease;
@@ -442,8 +439,6 @@ body::before {
     line-height: 1;
 }
 
-
-/* 順番に出現 */
 .openbtn.active ~ .nav #g-navi li,
 .nav.active #g-navi li {
     transform: translateY(0);
@@ -563,7 +558,7 @@ body::before {
 
 /*---------- スライド ----------*/
 .fixed {
-    position: -webkit-sticky; /* Safari */
+    position: -webkit-sticky;
     position: sticky;
     top: 0px;
     height: 100vh;
@@ -580,7 +575,7 @@ body::before {
 
 .fixed01 { background-image: url(../img/about_bg01.png); z-index: 1; }
 .fixed02 { background-image: url(../img/about_bg02.png); z-index: 2; }
-.fixed03 { background-image: url(../img/about_bg06.png); z-index: 3; } /* 追加ページ */
+.fixed03 { background-image: url(../img/about_bg06.png); z-index: 3; } 
 .fixed04 { background-image: url(../img/about_bg03.png); z-index: 4; }
 .fixed05 { background-image: url(../img/about_bg04.png); z-index: 5; }
 .fixed06 { background-image: url(../img/about_bg05.png); z-index: 6; }
@@ -595,13 +590,13 @@ body::before {
     margin: auto;
     height: 100%;
     gap: clamp(15px, 3vw, 50px);
-    flex-wrap: nowrap; /* PC幅では絶対に折り返さず横並びをキープ */
+    flex-wrap: nowrap; 
 }
-/* about img */
+
 .fixed_img {
     width: clamp(180px, 28vw, 450px); 
     max-width: 450px;
-    flex-shrink: 0; /* 画像が縮みすぎないようにする */
+    flex-shrink: 0; 
     flex-basis: clamp(180px, 28vw, 450px);
 }
 
@@ -680,12 +675,12 @@ body::before {
     display: grid;
     justify-content: center;
     align-items: center;
-    bottom: 110px;
+    bottom: 150px;
     animation: scrollUpDown 1s ease-in-out infinite alternate;
 }
 
 .next_text {
-    font-size: clamp(16px, 2vw, 25px);
+    font-size: clamp(18px, 2vw, 25px);
     font-family: "Alegreya Sans", sans-serif;
     text-align: center;
     font-weight: 700;
@@ -794,7 +789,7 @@ body::before {
     width: 100%;
     margin: 6rem auto 0;
     position: relative;
-    gap: 40px;  /* ← 矢印と動画の間隔 */
+    gap: 40px;
     padding: 0 60px;
     overflow: hidden;
 }
@@ -861,12 +856,9 @@ body::before {
     border-radius: 8px;
 }
 
- .card_title {
+.card_title {
     display: none;
  }
-
-
-/* 矢印ボタン */
 
 .carousel-arrow {
     width: 60px;
@@ -1113,7 +1105,7 @@ body::before {
     font-weight: 900;
     font-family: sans-serif;
     z-index: 1;
-    transition: background-color 0.3s ease, color 0.3s ease; /* ホバー時のアニメーション用 */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 @keyframes rainbowGlow {
@@ -1288,10 +1280,14 @@ body::before {
 
 span.initiative_namber{
     font-family: "Inter", sans-serif;
+    font-style: italic; 
+    letter-spacing: 0;     
+    line-height: 1;
+    padding-right: 0.2em;     
     font-size: 14rem;
     position: absolute;
     right: 0;
-    top: 50px;
+    top:100px;
     color: rgba(255, 255, 255, 0.3);
 }
 
@@ -1492,9 +1488,7 @@ span.initiative_namber{
     padding: 60px 0;
 }
 
-/* =========================================
-   移住した人の声：チャット風UI
-============================================ */
+/* 移住した人の声：チャット風UI*/
 .voice_chat_contents{
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1797,7 +1791,7 @@ span.initiative_namber{
     box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.1);
 }
 
-/* 支援・奨励金一覧(.money_title)と同じピル型タイトル（配色は反転） */
+/* 支援・奨励金一覧 */
 .support_title{
     font-size: 1rem;
     font-weight: 900;
@@ -1819,7 +1813,7 @@ span.initiative_namber{
     line-height: 1.8;
 }
 
-/* 右下の薄い番号（支援・奨励金一覧と同じ演出） */
+/* 右下番号*/
 .support_list::before{
     content: counter(support);
     position: absolute;
@@ -1834,11 +1828,9 @@ span.initiative_namber{
     pointer-events: none;
 }
 
-/* 「1」のみ右端に寄せる */
 .support_list:first-child::before{
     right: 0px;
 }
-
 
 .support{
     padding: 60px 0 0;
@@ -1987,7 +1979,7 @@ span.initiative_namber{
     margin-bottom: 35px;
 }
 
-/* SP：flexを解除して縦積みに */
+/*SP*/
 @media screen and (max-width: 767px) {
     .support_other_box,.dhw_box,.supplement_sec{
         display: block;
@@ -2130,7 +2122,7 @@ span.initiative_namber{
     font-weight: 900;
     font-family: sans-serif;
     z-index: 1;
-    transition: background-color 0.3s ease, color 0.3s ease; /* ホバー時のアニメーション用 */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .supplement_link:hover {
@@ -2152,7 +2144,6 @@ span.initiative_namber{
     text-align: left;
 }
  
-/* 虹色の境界線 */
 .footer_top_line {
     position: absolute;
     top: 0;
@@ -2179,7 +2170,6 @@ span.initiative_namber{
     border-bottom: 1.5px solid rgba(255, 255, 255, 0.45);
 }
  
-/* ---- ブランドエリア ---- */
 .footer_brand {
     flex: 1 1 240px;
 }
@@ -2263,7 +2253,6 @@ span.initiative_namber{
     margin-bottom: 20px;
 }
  
-/* サイト内の .data_more_btn を踏襲した虹色ピルボタン（フッター用に小型化） */
 .footer_more_btn {
     display: inline-flex;
     align-items: center;
@@ -2390,7 +2379,7 @@ span.initiative_namber{
     font-style: normal;
 }
  
-/* ---- レスポンシブ（SP版） ---- */
+/* ---- レスポンシブ ---- */
 @media screen and (max-width: 767px) {
     .site_footer {
         padding: 48px 20px 0;
@@ -2401,8 +2390,6 @@ span.initiative_namber{
         height: 4px;
     }
 
-    /* 1カラムで縦積みにし、他セクション（.fixed_area等）と
-       同様に中央ぞろえへ切り替える */
     .footer_inner {
         flex-direction: column;
         align-items: center;
@@ -2432,8 +2419,6 @@ span.initiative_namber{
         margin-bottom: 16px;
     }
 
-    /* ナビリストは中央寄せの上、各リンク内はEN/JPを
-       横並びのまま中央に揃える */
     .footer_nav_list {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 150px));
@@ -2474,7 +2459,6 @@ span.initiative_namber{
         justify-content: center;
     }
 
-    /* ロゴ→コピーライトの順で縦積み・中央ぞろえ */
     .footer_bottom {
         flex-direction: column-reverse;
         gap: 18px;
@@ -2487,7 +2471,7 @@ span.initiative_namber{
     }
 }
 
-/* ---- 小型スマホ向け微調整 ---- */
+/* ---- 微調整 ---- */
 @media screen and (max-width: 480px) {
     .site_footer {
         padding: 40px 16px 0;
@@ -2525,7 +2509,7 @@ body.no-scroll {
 }
 
 /* ==============================
-   タブレット幅(481〜1100px)のルートfont-size補正
+   タブレット幅(481〜1100px)
 ============================== */
 @media screen and (min-width: 481px) and (max-width: 1100px) {
     html {
@@ -2597,7 +2581,7 @@ body.no-scroll {
     }
 
     .next_container{
-        bottom: 100px;
+        bottom: 160px;
     }
 
     .next_triangle{
@@ -2648,7 +2632,7 @@ body.no-scroll {
 
     span.initiative_namber {
         font-size: clamp(90px, 16vw, 160px);
-        top: 30px;
+        top:70px;
     }
 
     .initiative_inline p {
@@ -3259,7 +3243,9 @@ body.no-scroll {
 
     span.initiative_namber {
         font-size: clamp(70px, 24vw, 110px);
-        top: 10px;
+        top: 40px;
+        max-width: 100%;
+        
     }
 
     .initiative_text {
@@ -3452,10 +3438,6 @@ body.no-scroll {
     }
 }
 
-
-/* ==============================
-   スクロールふわっと出現
-============================== */
 .js-reveal {
     opacity: 0;
     transform: translateY(28px);
@@ -3477,7 +3459,7 @@ body.no-scroll {
     }
 }
 
-/* ===== ひとアニメーション ===== */
+/*  ひとアニメーション */
 @keyframes pyokoPyoko {
     0%, 20%, 100% { translate: 0 0;     scale: 1 1; }
     4%            { translate: 0 -16px; scale: 0.97 1.04; } 
@@ -3503,10 +3485,6 @@ body.no-scroll {
     }
 }
 
-/* =====================================================================
-   修正追記：アクセシビリティ・可読性・不具合対応
-   ===================================================================== */
-
 /* --- 共通ユーティリティ --- */
 .sr-only {
     position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
@@ -3519,10 +3497,8 @@ body.no-scroll {
 }
 .skip_link:focus { top: 12px; }
 
-/* --- splash：再訪時は最初から非表示（head内スクリプトで html.visited を付与） --- */
 html.visited #splash { display: none !important; }
 
-/* --- フォーカス表示（キーボード操作） --- */
 a:focus-visible, button:focus-visible {
     outline: 3px solid #ffd400;
     outline-offset: 3px;
@@ -3537,7 +3513,6 @@ a:focus-visible, button:focus-visible {
     animation: rainbowGlow 0.8s ease-in-out forwards;
 }
 
-/* --- 文字サイズの下限引き上げ --- */
 .data_sec_annotation { font-size: 12px; }
 .initiative_supplement { font-size: max(13px, 0.8rem); line-height: 1.7; }
 .company_text { font-size: max(13px, 0.8rem); }
@@ -3550,23 +3525,19 @@ a:focus-visible, button:focus-visible {
     .initiative_supplement { font-size: 12.5px; }
 }
 
-/* --- ナビ：低い画面（スマホ横向き等）で切れないように --- */
 @media screen and (max-height: 700px) {
     #g-navi li { margin: 12px 0; }
-    .navi_text_en { font-size: clamp(34px, 9vh, 65px); }
+    .navi_text_en { font-size: clamp(34px, 7vh, 65px); }
 }
 
-/* --- INITIATIVE 見出し：481〜700px幅での見切れ対策 --- */
 .initiative_title_en { font-size: clamp(56px, 18vw, 150px); }
 
-/* --- マーキー（li > a 構造に対応、一時停止） --- */
 .initiative_li_03 > a {
     display: flex; flex-direction: column; flex: 1;
     color: inherit; text-decoration: none;
 }
-.marquee_wrap:hover .marquee_track,
+.marquee_track:has(.initiative_li_03:hover),
 .marquee_wrap:focus-within .marquee_track { animation-play-state: paused; }
 
-/* --- カルーセル：非アクティブ動画は操作不可 --- */
 .slider-item:not(.active) iframe { visibility: hidden; }
 .slider-item.prev iframe, .slider-item.next iframe { visibility: visible; }
